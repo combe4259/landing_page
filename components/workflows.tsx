@@ -1,173 +1,223 @@
-import Image from "next/image";
-import WorflowImg01 from "@/public/images/workflow-01.png";
-import WorflowImg02 from "@/public/images/workflow-02.png";
-import WorflowImg03 from "@/public/images/workflow-03.png";
 import Spotlight from "@/components/spotlight";
 
 export default function Workflows() {
   return (
-    <section>
+    <section id="features">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="pb-12 md:pb-20">
           {/* Section header */}
           <div className="mx-auto max-w-3xl pb-12 text-center md:pb-20">
-            <div className="inline-flex items-center gap-3 pb-3 before:h-px before:w-8 before:bg-linear-to-r before:from-transparent before:to-indigo-200/50 after:h-px after:w-8 after:bg-linear-to-l after:from-transparent after:to-indigo-200/50">
-              <span className="inline-flex bg-linear-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
-                Tailored Workflows
+            <div className="inline-flex items-center gap-3 pb-3 before:h-px before:w-8 before:bg-linear-to-r before:from-transparent before:to-gray-400/50 after:h-px after:w-8 after:bg-linear-to-l after:from-transparent after:to-gray-400/50">
+              <span className="inline-flex bg-linear-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+                ✦ 주요 기능
               </span>
             </div>
-            <h2 className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,var(--color-gray-200),var(--color-indigo-200),var(--color-gray-50),var(--color-indigo-300),var(--color-gray-200))] bg-[length:200%_auto] bg-clip-text pb-4 font-nacelle text-3xl font-semibold text-transparent md:text-4xl">
-              Map your product journey
+            <h2
+              className="pb-4 text-3xl font-bold text-gray-900 md:text-4xl"
+              style={{ fontFamily: "'Noto Sans KR', sans-serif" }}
+            >
+              <span className="bg-linear-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+                이렇게 보호해드려요
+              </span>
             </h2>
-            <p className="text-lg text-indigo-200/65">
-              Simple and elegant interface to start collaborating with your team
-              in minutes. It seamlessly integrates with your code and your
-              favorite programming languages.
+            <p className="text-lg text-gray-700" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
+              고액 거래 시 3단계 안전 장치로 치매·인지저하 환자의 금융 자산을 보호합니다
             </p>
           </div>
-          {/* Spotlight items */}
+          {/* Spotlight cards */}
           <Spotlight className="group mx-auto grid max-w-sm items-start gap-6 lg:max-w-none lg:grid-cols-3">
-            {/* Card 1 */}
-            <a
-              className="group/card relative h-full overflow-hidden rounded-2xl bg-gray-800 p-px before:pointer-events-none before:absolute before:-left-40 before:-top-40 before:z-10 before:h-80 before:w-80 before:translate-x-[var(--mouse-x)] before:translate-y-[var(--mouse-y)] before:rounded-full before:bg-indigo-500/80 before:opacity-0 before:blur-3xl before:transition-opacity before:duration-500 after:pointer-events-none after:absolute after:-left-48 after:-top-48 after:z-30 after:h-64 after:w-64 after:translate-x-[var(--mouse-x)] after:translate-y-[var(--mouse-y)] after:rounded-full after:bg-indigo-500 after:opacity-0 after:blur-3xl after:transition-opacity after:duration-500 hover:after:opacity-20 group-hover:before:opacity-100"
-              href="#0"
-            >
-              <div className="relative z-20 h-full overflow-hidden rounded-[inherit] bg-gray-950 after:absolute after:inset-0 after:bg-linear-to-br after:from-gray-900/50 after:via-gray-800/25 after:to-gray-900/50">
-                {/* Arrow */}
+            {/* Card 1 - 인지 확인 퀴즈 */}
+            <div className="group/card h-full" style={{ perspective: "1600px" }}>
+              <div className="relative h-full overflow-hidden rounded-2xl bg-blue-100/70 p-px before:pointer-events-none before:absolute before:-left-40 before:-top-40 before:z-10 before:h-80 before:w-80 before:translate-x-[var(--mouse-x)] before:translate-y-[var(--mouse-y)] before:rounded-full before:bg-blue-500/80 before:opacity-0 before:blur-3xl before:transition-opacity before:duration-500 after:pointer-events-none after:absolute after:-left-48 after:-top-48 after:z-30 after:h-64 after:w-64 after:translate-x-[var(--mouse-x)] after:translate-y-[var(--mouse-y)] after:rounded-full after:bg-blue-500 after:opacity-0 after:blur-3xl after:transition-opacity after:duration-500 hover:after:opacity-20 group-hover:before:opacity-100">
+              <div
+                className="relative z-20 h-full transition-transform duration-600 ease-out group-hover/card:[transform:rotateY(180deg)]"
+                style={{ transformStyle: "preserve-3d" }}
+              >
                 <div
-                  className="absolute right-6 top-6 flex h-8 w-8 items-center justify-center rounded-full border border-gray-700/50 bg-gray-800/65 text-gray-200 opacity-0 transition-opacity group-hover/card:opacity-100"
-                  aria-hidden="true"
+                  className="h-full overflow-hidden rounded-[inherit] border border-gray-200 bg-white"
+                  style={{ backfaceVisibility: "hidden" }}
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width={9}
-                    height={8}
-                    fill="none"
-                  >
-                    <path
-                      fill="#F4F4F5"
-                      d="m4.92 8-.787-.763 2.733-2.68H0V3.443h6.866L4.133.767 4.92 0 9 4 4.92 8Z"
-                    />
-                  </svg>
-                </div>
-                {/* Image */}
-                <Image
-                  className="inline-flex"
-                  src={WorflowImg01}
-                  width={350}
-                  height={288}
-                  alt="Workflow 01"
-                />
-                {/* Content */}
-                <div className="p-6">
-                  <div className="mb-3">
-                    <span className="btn-sm relative rounded-full bg-gray-800/40 px-2.5 py-0.5 text-xs font-normal before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_bottom,--theme(--color-gray-700/.15),--theme(--color-gray-700/.5))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-gray-800/60">
-                      <span className="bg-linear-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
-                        Built-in Tools
-                      </span>
-                    </span>
+                  <div className="flex h-64 items-center justify-center bg-linear-to-br from-blue-500/15 via-blue-400/5 to-white px-4 py-6">
+                    <div className="flex h-full w-full max-w-[280px] items-center justify-center rounded-[1.75rem] border border-blue-100/80 bg-white shadow-[0_20px_45px_-25px_rgba(59,130,246,0.45)] ring-1 ring-blue-100/60">
+                      <div className="rounded-[1.25rem] bg-gradient-to-br from-blue-500/15 to-blue-400/5 p-7 ring-1 ring-blue-200/60">
+                        <svg className="h-16 w-16 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                          <circle cx="12" cy="12" r="10" />
+                          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                          <line x1="12" y1="17" x2="12.01" y2="17" />
+                        </svg>
+                      </div>
+                      <div className="pointer-events-none absolute -left-3 top-4 rounded-full border border-blue-200/80 bg-white/90 px-3 py-1 text-xs font-semibold text-blue-600 shadow-sm">
+                        인지 확인
+                      </div>
+                    </div>
                   </div>
-                  <p className="text-indigo-200/65">
-                    Streamline the product development flow with a content
-                    platform that's aligned across specs and insights.
-                  </p>
+                  <div className="p-10">
+                    <h3 className="mb-2 text-lg font-semibold text-gray-900" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
+                      인지 확인 퀴즈
+                    </h3>
+                    <p className="text-gray-800" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
+                      큰 금액 거래 전, 간단한 확인 질문으로 본인의 의사를 확인하고 실수를 방지해요
+                    </p>
+                  </div>
+                </div>
+                <div
+                  className="absolute inset-0 h-full overflow-hidden rounded-[inherit] border border-blue-100 bg-white"
+                  style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+                >
+                  <div className="flex h-full flex-col bg-linear-to-br from-blue-500/10 to-blue-400/5 p-6">
+                    <div className="mx-auto w-full max-w-[300px] overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-sm">
+                      <div className="relative mx-auto" style={{ width: "300px", height: "520px" }}>
+                        <iframe
+                          src="/screens/10-patient-quiz.html"
+                          title="인지 확인 퀴즈 화면"
+                          className="border-0"
+                          style={{
+                            width: "430px",
+                            height: "932px",
+                            transform: "scale(0.697)",
+                            transformOrigin: "top left",
+                            position: "absolute",
+                            inset: 0,
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <p className="mt-4 text-center text-sm font-medium text-blue-700">
+                      인지 확인 퀴즈 화면
+                    </p>
+                  </div>
                 </div>
               </div>
-            </a>
-            {/* Card 2 */}
-            <a
-              className="group/card relative h-full overflow-hidden rounded-2xl bg-gray-800 p-px before:pointer-events-none before:absolute before:-left-40 before:-top-40 before:z-10 before:h-80 before:w-80 before:translate-x-[var(--mouse-x)] before:translate-y-[var(--mouse-y)] before:rounded-full before:bg-indigo-500/80 before:opacity-0 before:blur-3xl before:transition-opacity before:duration-500 after:pointer-events-none after:absolute after:-left-48 after:-top-48 after:z-30 after:h-64 after:w-64 after:translate-x-[var(--mouse-x)] after:translate-y-[var(--mouse-y)] after:rounded-full after:bg-indigo-500 after:opacity-0 after:blur-3xl after:transition-opacity after:duration-500 hover:after:opacity-20 group-hover:before:opacity-100"
-              href="#0"
-            >
-              <div className="relative z-20 h-full overflow-hidden rounded-[inherit] bg-gray-950 after:absolute after:inset-0 after:bg-linear-to-br after:from-gray-900/50 after:via-gray-800/25 after:to-gray-900/50">
-                {/* Arrow */}
+            </div>
+            </div>
+            {/* Card 2 - 실시간 알림 */}
+            <div className="group/card h-full" style={{ perspective: "1600px" }}>
+              <div className="relative h-full overflow-hidden rounded-2xl bg-emerald-100/70 p-px before:pointer-events-none before:absolute before:-left-40 before:-top-40 before:z-10 before:h-80 before:w-80 before:translate-x-[var(--mouse-x)] before:translate-y-[var(--mouse-y)] before:rounded-full before:bg-emerald-500/80 before:opacity-0 before:blur-3xl before:transition-opacity before:duration-500 after:pointer-events-none after:absolute after:-left-48 after:-top-48 after:z-30 after:h-64 after:w-64 after:translate-x-[var(--mouse-x)] after:translate-y-[var(--mouse-y)] after:rounded-full after:bg-emerald-500 after:opacity-0 after:blur-3xl after:transition-opacity after:duration-500 hover:after:opacity-20 group-hover:before:opacity-100">
+              <div
+                className="relative z-20 h-full transition-transform duration-600 ease-out group-hover/card:[transform:rotateY(180deg)]"
+                style={{ transformStyle: "preserve-3d" }}
+              >
                 <div
-                  className="absolute right-6 top-6 flex h-8 w-8 items-center justify-center rounded-full border border-gray-700/50 bg-gray-800/65 text-gray-200 opacity-0 transition-opacity group-hover/card:opacity-100"
-                  aria-hidden="true"
+                  className="h-full overflow-hidden rounded-[inherit] border border-gray-200 bg-white"
+                  style={{ backfaceVisibility: "hidden" }}
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width={9}
-                    height={8}
-                    fill="none"
-                  >
-                    <path
-                      fill="#F4F4F5"
-                      d="m4.92 8-.787-.763 2.733-2.68H0V3.443h6.866L4.133.767 4.92 0 9 4 4.92 8Z"
-                    />
-                  </svg>
-                </div>
-                {/* Image */}
-                <Image
-                  className="inline-flex"
-                  src={WorflowImg02}
-                  width={350}
-                  height={288}
-                  alt="Workflow 02"
-                />
-                {/* Content */}
-                <div className="p-6">
-                  <div className="mb-3">
-                    <span className="btn-sm relative rounded-full bg-gray-800/40 px-2.5 py-0.5 text-xs font-normal before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_bottom,--theme(--color-gray-700/.15),--theme(--color-gray-700/.5))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-gray-800/60">
-                      <span className="bg-linear-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
-                        Scale Instantly
-                      </span>
-                    </span>
+                  <div className="flex h-64 items-center justify-center bg-linear-to-br from-emerald-500/15 via-emerald-400/5 to-white px-4 py-6">
+                    <div className="flex h-full w-full max-w-[280px] items-center justify-center rounded-[1.75rem] border border-emerald-100/80 bg-white shadow-[0_20px_45px_-25px_rgba(16,185,129,0.45)] ring-1 ring-emerald-100/60">
+                      <div className="rounded-[1.25rem] bg-gradient-to-br from-emerald-500/15 to-emerald-400/5 p-7 ring-1 ring-emerald-200/60">
+                        <svg className="h-16 w-16 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                          <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                        </svg>
+                      </div>
+                      <div className="pointer-events-none absolute -left-3 top-4 rounded-full border border-emerald-200/80 bg-white/90 px-3 py-1 text-xs font-semibold text-emerald-600 shadow-sm">
+                        즉시 알림
+                      </div>
+                    </div>
                   </div>
-                  <p className="text-indigo-200/65">
-                    Streamline the product development flow with a content
-                    platform that's aligned across specs and insights.
-                  </p>
+                  <div className="p-10">
+                    <h3 className="mb-2 text-lg font-semibold text-gray-900" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
+                      실시간 알림
+                    </h3>
+                    <p className="text-gray-800" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
+                      고액 거래 감지 시 보호자에게 즉시 푸시 알림을 보내 함께 확인할 수 있어요
+                    </p>
+                  </div>
+                </div>
+                <div
+                  className="absolute inset-0 h-full overflow-hidden rounded-[inherit] border border-emerald-100 bg-white"
+                  style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+                >
+                  <div className="flex h-full flex-col bg-linear-to-br from-emerald-500/10 to-emerald-400/5 p-6">
+                    <div className="mx-auto w-full max-w-[300px] overflow-hidden rounded-2xl border border-emerald-100 bg-white shadow-sm">
+                      <div className="relative mx-auto" style={{ width: "300px", height: "520px" }}>
+                        <iframe
+                          src="/screens/08-guardian-notifications.html"
+                          title="실시간 알림 화면"
+                          className="border-0"
+                          style={{
+                            width: "430px",
+                            height: "932px",
+                            transform: "scale(0.697)",
+                            transformOrigin: "top left",
+                            position: "absolute",
+                            inset: 0,
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <p className="mt-4 text-center text-sm font-medium text-emerald-700">
+                      실시간 알림 화면
+                    </p>
+                  </div>
                 </div>
               </div>
-            </a>
-            {/* Card 3 */}
-            <a
-              className="group/card relative h-full overflow-hidden rounded-2xl bg-gray-800 p-px before:pointer-events-none before:absolute before:-left-40 before:-top-40 before:z-10 before:h-80 before:w-80 before:translate-x-[var(--mouse-x)] before:translate-y-[var(--mouse-y)] before:rounded-full before:bg-indigo-500/80 before:opacity-0 before:blur-3xl before:transition-opacity before:duration-500 after:pointer-events-none after:absolute after:-left-48 after:-top-48 after:z-30 after:h-64 after:w-64 after:translate-x-[var(--mouse-x)] after:translate-y-[var(--mouse-y)] after:rounded-full after:bg-indigo-500 after:opacity-0 after:blur-3xl after:transition-opacity after:duration-500 hover:after:opacity-20 group-hover:before:opacity-100"
-              href="#0"
-            >
-              <div className="relative z-20 h-full overflow-hidden rounded-[inherit] bg-gray-950 after:absolute after:inset-0 after:bg-linear-to-br after:from-gray-900/50 after:via-gray-800/25 after:to-gray-900/50">
-                {/* Arrow */}
+            </div>
+            </div>
+            {/* Card 3 - 가족 연동 */}
+            <div className="group/card h-full" style={{ perspective: "1600px" }}>
+              <div className="relative h-full overflow-hidden rounded-2xl bg-amber-100/70 p-px before:pointer-events-none before:absolute before:-left-40 before:-top-40 before:z-10 before:h-80 before:w-80 before:translate-x-[var(--mouse-x)] before:translate-y-[var(--mouse-y)] before:rounded-full before:bg-amber-500/80 before:opacity-0 before:blur-3xl before:transition-opacity before:duration-500 after:pointer-events-none after:absolute after:-left-48 after:-top-48 after:z-30 after:h-64 after:w-64 after:translate-x-[var(--mouse-x)] after:translate-y-[var(--mouse-y)] after:rounded-full after:bg-amber-500 after:opacity-0 after:blur-3xl after:transition-opacity after:duration-500 hover:after:opacity-20 group-hover:before:opacity-100">
+              <div
+                className="relative z-20 h-full transition-transform duration-600 ease-out group-hover/card:[transform:rotateY(180deg)]"
+                style={{ transformStyle: "preserve-3d" }}
+              >
                 <div
-                  className="absolute right-6 top-6 flex h-8 w-8 items-center justify-center rounded-full border border-gray-700/50 bg-gray-800/65 text-gray-200 opacity-0 transition-opacity group-hover/card:opacity-100"
-                  aria-hidden="true"
+                  className="h-full overflow-hidden rounded-[inherit] border border-gray-200 bg-white"
+                  style={{ backfaceVisibility: "hidden" }}
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width={9}
-                    height={8}
-                    fill="none"
-                  >
-                    <path
-                      fill="#F4F4F5"
-                      d="m4.92 8-.787-.763 2.733-2.68H0V3.443h6.866L4.133.767 4.92 0 9 4 4.92 8Z"
-                    />
-                  </svg>
-                </div>
-                {/* Image */}
-                <Image
-                  className="inline-flex"
-                  src={WorflowImg03}
-                  width={350}
-                  height={288}
-                  alt="Workflow 03"
-                />
-                {/* Content */}
-                <div className="p-6">
-                  <div className="mb-3">
-                    <span className="btn-sm relative rounded-full bg-gray-800/40 px-2.5 py-0.5 text-xs font-normal before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_bottom,--theme(--color-gray-700/.15),--theme(--color-gray-700/.5))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-gray-800/60">
-                      <span className="bg-linear-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
-                        Tailored Flows
-                      </span>
-                    </span>
+                  <div className="flex h-64 items-center justify-center bg-linear-to-br from-amber-500/15 via-amber-400/5 to-white px-4 py-6">
+                    <div className="flex h-full w-full max-w-[280px] items-center justify-center rounded-[1.75rem] border border-amber-100/80 bg-white shadow-[0_20px_45px_-25px_rgba(245,158,11,0.45)] ring-1 ring-amber-100/60">
+                      <div className="rounded-[1.25rem] bg-gradient-to-br from-amber-500/15 to-amber-400/5 p-7 ring-1 ring-amber-200/60">
+                        <svg className="h-16 w-16 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                          <circle cx="9" cy="7" r="4" />
+                          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                        </svg>
+                      </div>
+                      <div className="pointer-events-none absolute -left-3 top-4 rounded-full border border-amber-200/80 bg-white/90 px-3 py-1 text-xs font-semibold text-amber-600 shadow-sm">
+                        안전 연결
+                      </div>
+                    </div>
                   </div>
-                  <p className="text-indigo-200/65">
-                    Streamline the product development flow with a content
-                    platform that's aligned across specs and insights.
-                  </p>
+                  <div className="p-10">
+                    <h3 className="mb-2 text-lg font-semibold text-gray-900" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
+                      가족 연동
+                    </h3>
+                    <p className="text-gray-800" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
+                      믿을 수 있는 보호자와 안전하게 연결되어 거래 내역을 공유하고 관리해요
+                    </p>
+                  </div>
+                </div>
+                <div
+                  className="absolute inset-0 h-full overflow-hidden rounded-[inherit] border border-amber-100 bg-white"
+                  style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+                >
+                  <div className="flex h-full flex-col bg-linear-to-br from-amber-500/10 to-amber-400/5 p-6">
+                    <div className="mx-auto w-full max-w-[300px] overflow-hidden rounded-2xl border border-amber-100 bg-white shadow-sm">
+                      <div className="relative mx-auto" style={{ width: "300px", height: "520px" }}>
+                        <iframe
+                          src="/screens/06-guardian-link.html"
+                          title="가족 연동 화면"
+                          className="border-0"
+                          style={{
+                            width: "430px",
+                            height: "932px",
+                            transform: "scale(0.697)",
+                            transformOrigin: "top left",
+                            position: "absolute",
+                            inset: 0,
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <p className="mt-4 text-center text-sm font-medium text-amber-700">
+                      가족 연동 화면
+                    </p>
+                  </div>
                 </div>
               </div>
-            </a>
+            </div>
+            </div>
           </Spotlight>
         </div>
       </div>

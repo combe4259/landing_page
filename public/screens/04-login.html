@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>로그인 - 케어페이플러스</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #2563EB;
+      --primary-dark: #1D4ED8;
+      --primary-light: #DBEAFE;
+      --secondary: #10B981;
+      --danger: #EF4444;
+      --danger-light: #FEE2E2;
+      --text-primary: #1E293B;
+      --text-secondary: #64748B;
+      --bg-main: #F8FAFC;
+      --white: #FFFFFF;
+      --border: #E2E8F0;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-main);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .mobile-frame {
+      max-width: 430px;
+      min-height: 100vh;
+      margin: 0 auto;
+      background: var(--white);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      background: var(--white);
+    }
+
+    .back-button {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-main);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .back-button:hover {
+      background: var(--primary-light);
+    }
+
+    .back-button svg {
+      width: 24px;
+      height: 24px;
+      color: var(--text-primary);
+    }
+
+    .header-title {
+      flex: 1;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 700;
+      margin-right: 44px;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 48px 24px 32px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Logo */
+    .logo-section {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .logo-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      box-shadow: 0 8px 24px rgba(37, 99, 235, 0.3);
+    }
+
+    .logo-icon svg {
+      width: 44px;
+      height: 44px;
+      color: var(--white);
+    }
+
+    .logo-section h1 {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-section p {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    /* Form */
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-label {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 18px 20px;
+      font-size: 17px;
+      font-family: inherit;
+      color: var(--text-primary);
+      background: var(--bg-main);
+      border: 2px solid transparent;
+      border-radius: 14px;
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .form-input:focus {
+      background: var(--white);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    }
+
+    .form-input::placeholder {
+      color: var(--text-secondary);
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-secondary);
+    }
+
+    .password-toggle:hover {
+      color: var(--text-primary);
+    }
+
+    .password-toggle svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Error Alert */
+    .error-alert {
+      display: none;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      background: var(--danger-light);
+      border: 1px solid #FECACA;
+      border-radius: 14px;
+      animation: shake 0.4s ease;
+    }
+
+    .error-alert.show {
+      display: flex;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+
+    .error-alert svg {
+      width: 24px;
+      height: 24px;
+      min-width: 24px;
+      color: var(--danger);
+    }
+
+    .error-alert span {
+      font-size: 15px;
+      color: var(--danger);
+      font-weight: 500;
+    }
+
+    /* Remember & Forgot */
+    .form-options {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 4px;
+    }
+
+    .remember-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .checkbox-custom {
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .remember-checkbox input {
+      display: none;
+    }
+
+    .remember-checkbox input:checked + .checkbox-custom {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .checkbox-custom svg {
+      width: 14px;
+      height: 14px;
+      color: var(--white);
+      opacity: 0;
+      transform: scale(0);
+      transition: all 0.2s ease;
+    }
+
+    .remember-checkbox input:checked + .checkbox-custom svg {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .remember-checkbox span {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .forgot-link {
+      font-size: 14px;
+      color: var(--primary);
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    /* Login Button */
+    .login-button {
+      width: 100%;
+      padding: 18px 32px;
+      margin-top: 12px;
+      background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+      color: var(--white);
+      font-size: 18px;
+      font-weight: 700;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+    }
+
+    .login-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
+    }
+
+    .login-button:active {
+      transform: translateY(0);
+    }
+
+    .login-button:disabled {
+      background: var(--border);
+      color: var(--text-secondary);
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+
+    /* Loading State */
+    .login-button.loading {
+      pointer-events: none;
+      position: relative;
+    }
+
+    .login-button.loading span {
+      visibility: hidden;
+    }
+
+    .login-button.loading::after {
+      content: '';
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border: 3px solid var(--white);
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 32px 0;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .divider span {
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* Signup Link */
+    .signup-section {
+      text-align: center;
+      margin-top: auto;
+    }
+
+    .signup-section p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .signup-button {
+      width: 100%;
+      padding: 16px 32px;
+      background: var(--white);
+      color: var(--primary);
+      font-size: 16px;
+      font-weight: 700;
+      border: 2px solid var(--primary);
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .signup-button:hover {
+      background: var(--primary-light);
+    }
+
+    /* Footer */
+    .footer {
+      padding: 24px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .footer a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      margin: 0 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-frame">
+    <!-- Header -->
+    <header class="header">
+      <button class="back-button" onclick="history.back()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <span class="header-title">로그인</span>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Logo -->
+      <div class="logo-section">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="M9 12l2 2 4-4"/>
+          </svg>
+        </div>
+        <h1>다시 오셨군요!</h1>
+        <p>계정에 로그인해주세요</p>
+      </div>
+
+      <!-- Form -->
+      <form class="login-form" id="loginForm" onsubmit="return false;">
+        <!-- Error Alert -->
+        <div class="error-alert" id="errorAlert">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <span>이메일 또는 비밀번호가 올바르지 않습니다</span>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label class="form-label">이메일</label>
+          <div class="input-wrapper">
+            <input type="email" class="form-input" id="email" placeholder="example@email.com" required>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label class="form-label">비밀번호</label>
+          <div class="input-wrapper">
+            <input type="password" class="form-input" id="password" placeholder="비밀번호를 입력해주세요" required style="padding-right: 60px;">
+            <button type="button" class="password-toggle" onclick="togglePassword()">
+              <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Options -->
+        <div class="form-options">
+          <label class="remember-checkbox">
+            <input type="checkbox" id="remember">
+            <div class="checkbox-custom">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <span>로그인 유지</span>
+          </label>
+          <a href="#" class="forgot-link">비밀번호 찾기</a>
+        </div>
+
+        <!-- Login Button -->
+        <button type="submit" class="login-button" id="loginBtn" onclick="handleLogin()">
+          <span>로그인</span>
+        </button>
+      </form>
+
+      <!-- Divider -->
+      <div class="divider">
+        <span>또는</span>
+      </div>
+
+      <!-- Signup -->
+      <div class="signup-section">
+        <p>아직 계정이 없으신가요?</p>
+        <button class="signup-button" onclick="location.href='02-role-select.html'">
+          새 계정 만들기
+        </button>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <a href="#">이용약관</a>|<a href="#">개인정보처리방침</a>|<a href="#">고객센터</a>
+    </footer>
+  </div>
+
+  <script>
+    function togglePassword() {
+      const passwordInput = document.getElementById('password');
+      const eyeIcon = document.getElementById('eyeIcon');
+      
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeIcon.innerHTML = `
+          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+          <line x1="1" y1="1" x2="23" y2="23"/>
+        `;
+      } else {
+        passwordInput.type = 'password';
+        eyeIcon.innerHTML = `
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+          <circle cx="12" cy="12" r="3"/>
+        `;
+      }
+    }
+
+    function handleLogin() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const loginBtn = document.getElementById('loginBtn');
+      const errorAlert = document.getElementById('errorAlert');
+
+      // Hide error
+      errorAlert.classList.remove('show');
+
+      // Show loading
+      loginBtn.classList.add('loading');
+
+      // Simulate API call
+      setTimeout(() => {
+        loginBtn.classList.remove('loading');
+
+        // Mock validation - in real app, validate with server
+        if (email && password) {
+          // Success - redirect based on role (mock)
+          // In real app, server would return user role
+          const mockRole = email.includes('guardian') ? 'guardian' : 'patient';
+          
+          if (mockRole === 'guardian') {
+            location.href = '05-guardian-dashboard.html';
+          } else {
+            location.href = '09-patient-link-request.html';
+          }
+        } else {
+          // Show error
+          errorAlert.classList.add('show');
+        }
+      }, 1500);
+    }
+
+    // Enter key to submit
+    document.getElementById('loginForm').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        handleLogin();
+      }
+    });
+  </script>
+</body>
+</html>

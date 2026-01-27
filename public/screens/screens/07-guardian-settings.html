@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>설정 - 케어페이플러스</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #2563EB;
+      --primary-dark: #1D4ED8;
+      --primary-light: #DBEAFE;
+      --secondary: #10B981;
+      --secondary-light: #D1FAE5;
+      --danger: #EF4444;
+      --danger-light: #FEE2E2;
+      --warning: #F59E0B;
+      --warning-light: #FEF3C7;
+      --text-primary: #1E293B;
+      --text-secondary: #64748B;
+      --bg-main: #F8FAFC;
+      --white: #FFFFFF;
+      --border: #E2E8F0;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-main);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .mobile-frame {
+      max-width: 430px;
+      min-height: 100vh;
+      margin: 0 auto;
+      background: var(--bg-main);
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 100px;
+    }
+
+    /* Header */
+    .header {
+      padding: 16px 24px;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .back-button {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .back-button:hover {
+      background: var(--bg-main);
+    }
+
+    .back-button svg {
+      width: 24px;
+      height: 24px;
+      color: var(--text-primary);
+    }
+
+    .header-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    /* Main Content */
+    .main-content {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Section */
+    .section {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 24px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .section-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .section-icon.blue {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .section-icon.green {
+      background: var(--secondary-light);
+      color: var(--secondary);
+    }
+
+    .section-icon.amber {
+      background: var(--warning-light);
+      color: var(--warning);
+    }
+
+    .section-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .section-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    /* Threshold Setting */
+    .threshold-display {
+      text-align: center;
+      padding: 24px 0;
+      margin-bottom: 16px;
+    }
+
+    .threshold-value {
+      font-size: 42px;
+      font-weight: 900;
+      color: var(--primary);
+      letter-spacing: -1px;
+    }
+
+    .threshold-unit {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-left: 4px;
+    }
+
+    .threshold-label {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-top: 8px;
+    }
+
+    /* Slider */
+    .slider-container {
+      padding: 0 8px;
+    }
+
+    .slider-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .slider-wrapper {
+      position: relative;
+      height: 48px;
+      display: flex;
+      align-items: center;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 8px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: linear-gradient(to right, var(--primary) 0%, var(--primary) var(--progress), var(--border) var(--progress), var(--border) 100%);
+      border-radius: 4px;
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 32px;
+      height: 32px;
+      background: var(--white);
+      border: 4px solid var(--primary);
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.1);
+    }
+
+    input[type="range"]::-webkit-slider-thumb:active {
+      transform: scale(0.95);
+    }
+
+    /* Quick Select Buttons */
+    .quick-select {
+      display: flex;
+      gap: 8px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .quick-btn {
+      flex: 1;
+      min-width: calc(33% - 6px);
+      padding: 12px 8px;
+      background: var(--bg-main);
+      border: 2px solid transparent;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .quick-btn:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .quick-btn.active {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* Notification Count Setting */
+    .count-selector {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 24px 0;
+    }
+
+    .count-btn {
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-main);
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .count-btn:hover {
+      background: var(--primary-light);
+    }
+
+    .count-btn:active {
+      transform: scale(0.95);
+    }
+
+    .count-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .count-btn svg {
+      width: 28px;
+      height: 28px;
+      color: var(--primary);
+    }
+
+    .count-display {
+      text-align: center;
+    }
+
+    .count-value {
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .count-unit {
+      font-size: 16px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    /* Info Box */
+    .info-box {
+      display: flex;
+      gap: 12px;
+      padding: 16px;
+      background: var(--primary-light);
+      border-radius: 12px;
+      margin-top: 16px;
+    }
+
+    .info-box.warning {
+      background: var(--warning-light);
+    }
+
+    .info-box svg {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      color: var(--primary);
+      margin-top: 2px;
+    }
+
+    .info-box.warning svg {
+      color: var(--warning);
+    }
+
+    .info-text {
+      font-size: 14px;
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+
+    /* Connected Patients */
+    .patient-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .patient-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      background: var(--bg-main);
+      border-radius: 16px;
+    }
+
+    .patient-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .patient-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .patient-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .patient-status {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .patient-status.pending {
+      color: var(--warning);
+    }
+
+    .patient-status.active {
+      color: var(--secondary);
+    }
+
+    .toggle-switch {
+      width: 52px;
+      height: 32px;
+      background: var(--border);
+      border-radius: 16px;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-switch.active {
+      background: var(--primary);
+    }
+
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 24px;
+      height: 24px;
+      background: var(--white);
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .toggle-switch.active::after {
+      left: 24px;
+    }
+
+    /* Account Section */
+    .menu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      background: transparent;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      width: 100%;
+      text-align: left;
+    }
+
+    .menu-item:hover {
+      background: var(--bg-main);
+    }
+
+    .menu-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .menu-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-main);
+      border-radius: 12px;
+    }
+
+    .menu-icon svg {
+      width: 20px;
+      height: 20px;
+      color: var(--text-secondary);
+    }
+
+    .menu-text {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .menu-item.danger .menu-text {
+      color: var(--danger);
+    }
+
+    .menu-item.danger .menu-icon svg {
+      color: var(--danger);
+    }
+
+    .menu-arrow svg {
+      width: 20px;
+      height: 20px;
+      color: var(--text-secondary);
+    }
+
+    /* Bottom Button */
+    .bottom-action {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 430px;
+      padding: 16px 24px;
+      padding-bottom: calc(16px + env(safe-area-inset-bottom));
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      z-index: 10;
+    }
+
+    .save-button {
+      width: 100%;
+      padding: 18px 32px;
+      background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+      color: var(--white);
+      font-size: 17px;
+      font-weight: 700;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+    }
+
+    .save-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
+    }
+
+    .save-button:active {
+      transform: translateY(0);
+    }
+
+    .save-button:disabled {
+      background: var(--border);
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 100;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      background: var(--white);
+      width: 100%;
+      max-width: 430px;
+      border-radius: 24px 24px 0 0;
+      padding: 32px 24px;
+      padding-bottom: calc(32px + env(safe-area-inset-bottom));
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .modal-icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 20px;
+      background: var(--warning-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-icon.success {
+      background: var(--secondary-light);
+    }
+
+    .modal-icon svg {
+      width: 36px;
+      height: 36px;
+      color: var(--warning);
+    }
+
+    .modal-icon.success svg {
+      color: var(--secondary);
+    }
+
+    .modal-title {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+
+    .modal-message {
+      text-align: center;
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .modal-btn {
+      flex: 1;
+      padding: 16px 24px;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .modal-btn.secondary {
+      background: var(--bg-main);
+      border: none;
+      color: var(--text-secondary);
+    }
+
+    .modal-btn.primary {
+      background: var(--primary);
+      border: none;
+      color: var(--white);
+    }
+
+    .modal-btn.single {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-frame">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-inner">
+        <button class="back-button" onclick="history.back()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+        <h1 class="header-title">설정</h1>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Threshold Setting -->
+      <section class="section">
+        <div class="section-header">
+          <div class="section-icon blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="1" x2="12" y2="23"/>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="section-title">고액 거래 기준</h2>
+            <p class="section-desc">이 금액 이상 거래 시 알림</p>
+          </div>
+        </div>
+
+        <div class="threshold-display">
+          <span class="threshold-value" id="thresholdValue">500</span>
+          <span class="threshold-unit">만원</span>
+          <p class="threshold-label">이상 거래 시 알림이 발송됩니다</p>
+        </div>
+
+        <div class="slider-container">
+          <div class="slider-labels">
+            <span>100만원</span>
+            <span>1억원</span>
+          </div>
+          <div class="slider-wrapper">
+            <input type="range" id="thresholdSlider" min="100" max="10000" step="100" value="500">
+          </div>
+        </div>
+
+        <div class="quick-select">
+          <button class="quick-btn" data-value="100">100만</button>
+          <button class="quick-btn" data-value="300">300만</button>
+          <button class="quick-btn active" data-value="500">500만</button>
+          <button class="quick-btn" data-value="1000">1000만</button>
+          <button class="quick-btn" data-value="3000">3000만</button>
+          <button class="quick-btn" data-value="5000">5000만</button>
+        </div>
+
+        <div class="info-box warning">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <span class="info-text">기준 금액 변경 시 연결된 환자분의 동의가 필요합니다. 동의 완료 후 적용됩니다.</span>
+        </div>
+      </section>
+
+      <!-- Notification Repeat Setting -->
+      <section class="section">
+        <div class="section-header">
+          <div class="section-icon green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="section-title">알림 반복 횟수</h2>
+            <p class="section-desc">확인 전까지 반복 알림</p>
+          </div>
+        </div>
+
+        <div class="count-selector">
+          <button class="count-btn" id="countMinus">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+          </button>
+          <div class="count-display">
+            <div class="count-value" id="countValue">3</div>
+            <div class="count-unit">회</div>
+          </div>
+          <button class="count-btn" id="countPlus">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"/>
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="info-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="16" x2="12" y2="12"/>
+            <line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+          <span class="info-text">알림을 확인하지 않으면 설정한 횟수만큼 5분 간격으로 다시 알림을 보내드립니다.</span>
+        </div>
+      </section>
+
+      <!-- Connected Patients -->
+      <section class="section">
+        <div class="section-header">
+          <div class="section-icon amber">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="section-title">연결된 가족</h2>
+            <p class="section-desc">알림 받을 환자 관리</p>
+          </div>
+        </div>
+
+        <div class="patient-list">
+          <div class="patient-item">
+            <div class="patient-info">
+              <div class="patient-avatar" style="background: linear-gradient(135deg, #EC4899, #DB2777);">홍</div>
+              <div>
+                <div class="patient-name">홍어머니</div>
+                <div class="patient-status active">● 연결됨</div>
+              </div>
+            </div>
+            <div class="toggle-switch active" onclick="this.classList.toggle('active')"></div>
+          </div>
+
+          <div class="patient-item">
+            <div class="patient-info">
+              <div class="patient-avatar" style="background: linear-gradient(135deg, #8B5CF6, #7C3AED);">홍</div>
+              <div>
+                <div class="patient-name">홍아버지</div>
+                <div class="patient-status pending">● 승인 대기중</div>
+              </div>
+            </div>
+            <div class="toggle-switch" onclick="this.classList.toggle('active')"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Account Settings -->
+      <section class="section">
+        <div class="section-header">
+          <div class="section-icon blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="section-title">계정 관리</h2>
+          </div>
+        </div>
+
+        <div class="menu-list">
+          <button class="menu-item">
+            <div class="menu-left">
+              <div class="menu-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="4"/>
+                  <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"/>
+                </svg>
+              </div>
+              <span class="menu-text">이메일 변경</span>
+            </div>
+            <div class="menu-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"/>
+              </svg>
+            </div>
+          </button>
+
+          <button class="menu-item">
+            <div class="menu-left">
+              <div class="menu-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </div>
+              <span class="menu-text">비밀번호 변경</span>
+            </div>
+            <div class="menu-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"/>
+              </svg>
+            </div>
+          </button>
+
+          <button class="menu-item">
+            <div class="menu-left">
+              <div class="menu-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+              </div>
+              <span class="menu-text">전화번호 변경</span>
+            </div>
+            <div class="menu-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"/>
+              </svg>
+            </div>
+          </button>
+
+          <button class="menu-item danger" onclick="showLogoutModal()">
+            <div class="menu-left">
+              <div class="menu-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                  <polyline points="16 17 21 12 16 7"/>
+                  <line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
+              </div>
+              <span class="menu-text">로그아웃</span>
+            </div>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Bottom Action -->
+    <div class="bottom-action">
+      <button class="save-button" id="saveButton" onclick="saveSettings()">
+        변경사항 저장하기
+      </button>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div class="modal-overlay" id="confirmModal">
+    <div class="modal-content">
+      <div class="modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+      </div>
+      <h3 class="modal-title">설정 변경 확인</h3>
+      <p class="modal-message">
+        고액 거래 기준이 변경되었습니다.<br>
+        연결된 환자분의 동의 후 적용됩니다.
+      </p>
+      <div class="modal-buttons">
+        <button class="modal-btn secondary" onclick="closeModal('confirmModal')">취소</button>
+        <button class="modal-btn primary" onclick="confirmSave()">확인</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success Modal -->
+  <div class="modal-overlay" id="successModal">
+    <div class="modal-content">
+      <div class="modal-icon success">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <h3 class="modal-title">저장 완료</h3>
+      <p class="modal-message">
+        변경사항이 저장되었습니다.<br>
+        환자분의 승인을 기다려주세요.
+      </p>
+      <div class="modal-buttons">
+        <button class="modal-btn primary single" onclick="closeModal('successModal'); location.href='05-guardian-dashboard.html'">확인</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logout Modal -->
+  <div class="modal-overlay" id="logoutModal">
+    <div class="modal-content">
+      <div class="modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+      </div>
+      <h3 class="modal-title">로그아웃</h3>
+      <p class="modal-message">
+        정말 로그아웃 하시겠습니까?
+      </p>
+      <div class="modal-buttons">
+        <button class="modal-btn secondary" onclick="closeModal('logoutModal')">취소</button>
+        <button class="modal-btn primary" onclick="location.href='04-login.html'">로그아웃</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // State
+    let currentThreshold = 500;
+    let originalThreshold = 500;
+    let notificationCount = 3;
+
+    // Elements
+    const thresholdSlider = document.getElementById('thresholdSlider');
+    const thresholdValue = document.getElementById('thresholdValue');
+    const countValue = document.getElementById('countValue');
+    const countMinus = document.getElementById('countMinus');
+    const countPlus = document.getElementById('countPlus');
+    const quickBtns = document.querySelectorAll('.quick-btn');
+    const saveButton = document.getElementById('saveButton');
+
+    // Initialize slider progress
+    function updateSliderProgress() {
+      const progress = ((currentThreshold - 100) / (10000 - 100)) * 100;
+      thresholdSlider.style.setProperty('--progress', progress + '%');
+    }
+
+    // Threshold slider
+    thresholdSlider.addEventListener('input', function() {
+      currentThreshold = parseInt(this.value);
+      thresholdValue.textContent = currentThreshold.toLocaleString();
+      updateSliderProgress();
+      updateQuickButtons();
+      checkChanges();
+    });
+
+    // Quick select buttons
+    quickBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const value = parseInt(this.dataset.value);
+        currentThreshold = value;
+        thresholdSlider.value = value;
+        thresholdValue.textContent = value.toLocaleString();
+        updateSliderProgress();
+        updateQuickButtons();
+        checkChanges();
+      });
+    });
+
+    function updateQuickButtons() {
+      quickBtns.forEach(btn => {
+        const value = parseInt(btn.dataset.value);
+        if (value === currentThreshold) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+    }
+
+    // Notification count
+    countMinus.addEventListener('click', function() {
+      if (notificationCount > 1) {
+        notificationCount--;
+        countValue.textContent = notificationCount;
+        updateCountButtons();
+        checkChanges();
+      }
+    });
+
+    countPlus.addEventListener('click', function() {
+      if (notificationCount < 10) {
+        notificationCount++;
+        countValue.textContent = notificationCount;
+        updateCountButtons();
+        checkChanges();
+      }
+    });
+
+    function updateCountButtons() {
+      countMinus.disabled = notificationCount <= 1;
+      countPlus.disabled = notificationCount >= 10;
+    }
+
+    // Check for changes
+    function checkChanges() {
+      const hasChanges = currentThreshold !== originalThreshold;
+      // Save button always enabled but shows confirm if threshold changed
+    }
+
+    // Save settings
+    function saveSettings() {
+      if (currentThreshold !== originalThreshold) {
+        document.getElementById('confirmModal').classList.add('active');
+      } else {
+        document.getElementById('successModal').classList.add('active');
+      }
+    }
+
+    function confirmSave() {
+      closeModal('confirmModal');
+      document.getElementById('successModal').classList.add('active');
+    }
+
+    function showLogoutModal() {
+      document.getElementById('logoutModal').classList.add('active');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+    }
+
+    // Initialize
+    updateSliderProgress();
+    updateCountButtons();
+
+    // Close modal on overlay click
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', function(e) {
+        if (e.target === this) {
+          this.classList.remove('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

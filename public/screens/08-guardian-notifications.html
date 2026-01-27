@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>알림 이력 - 케어페이플러스</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #2563EB;
+      --primary-dark: #1D4ED8;
+      --primary-light: #DBEAFE;
+      --secondary: #10B981;
+      --secondary-light: #D1FAE5;
+      --danger: #EF4444;
+      --danger-light: #FEE2E2;
+      --warning: #F59E0B;
+      --warning-light: #FEF3C7;
+      --text-primary: #1E293B;
+      --text-secondary: #64748B;
+      --bg-main: #F8FAFC;
+      --white: #FFFFFF;
+      --border: #E2E8F0;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-main);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .mobile-frame {
+      max-width: 430px;
+      min-height: 100vh;
+      margin: 0 auto;
+      background: var(--bg-main);
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 100px;
+    }
+
+    /* Header */
+    .header {
+      padding: 16px 24px;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .back-button {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .back-button:hover {
+      background: var(--bg-main);
+    }
+
+    .back-button svg {
+      width: 24px;
+      height: 24px;
+      color: var(--text-primary);
+    }
+
+    .header-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .filter-button {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-main);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-button:hover {
+      background: var(--primary-light);
+    }
+
+    .filter-button svg {
+      width: 22px;
+      height: 22px;
+      color: var(--text-primary);
+    }
+
+    /* Filter Tabs */
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      padding: 16px 24px;
+      background: var(--white);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .filter-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-tab {
+      padding: 10px 18px;
+      background: var(--bg-main);
+      border: none;
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-tab:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .filter-tab.active {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .filter-tab .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      font-size: 12px;
+      margin-left: 6px;
+    }
+
+    .filter-tab.active .badge {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Main Content */
+    .main-content {
+      padding: 16px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Date Group */
+    .date-group {
+      margin-bottom: 8px;
+    }
+
+    .date-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      padding: 0 4px;
+    }
+
+    .date-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .date-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Notification Card */
+    .notification-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .notification-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 24px; /* --padding-card */
+      cursor: pointer;
+      transition: all 0.2s ease;
+      /* 디자인 시스템을 따라 'border-left'로 강조 바를 구현합니다. */
+      border-left: 4px solid transparent;
+    }
+
+    .notification-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+    
+    /* 'unread' 클래스가 있는 카드에만 강조 바가 표시됩니다. */
+    .notification-card.unread {
+      border-left-color: var(--primary); /* 기본 색상 */
+    }
+
+    /* 알림 종류에 따라 바 색상이 변경됩니다. */
+    .notification-card.unread.danger {
+      border-left-color: var(--danger);
+    }
+
+    .notification-card.unread.warning {
+      border-left-color: var(--warning);
+    }
+
+    .notification-card.unread.success {
+      border-left-color: var(--secondary);
+    }
+
+    .notification-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .notification-type {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .type-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .type-icon.danger {
+      background: var(--danger-light);
+      color: var(--danger);
+    }
+
+    .type-icon.warning {
+      background: var(--warning-light);
+      color: var(--warning);
+    }
+
+    .type-icon.success {
+      background: var(--secondary-light);
+      color: var(--secondary);
+    }
+
+    .type-icon.info {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .type-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .notification-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .notification-patient {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .notification-time {
+      font-size: 14px; /* --text-xs */
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .notification-body {
+      padding-left: 54px;
+    }
+
+    .notification-details {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .detail-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .detail-label {
+      font-size: 14px;
+      color: var(--text-secondary);
+      min-width: 60px;
+    }
+
+    .detail-value {
+      font-size: 16px; /* --text-sm */
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .detail-value.amount {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .notification-card.danger .detail-value.amount {
+      color: var(--danger);
+    }
+
+    .notification-card.warning .detail-value.amount {
+      color: var(--warning);
+    }
+
+    .notification-card.success .detail-value.amount {
+      color: var(--secondary); /* success 상태는 --secondary 변수를 사용합니다. */
+    }
+
+    .notification-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 100px;
+      font-size: 14px; /* --text-xs */
+      font-weight: 600;
+    }
+
+    .notification-status.blocked {
+      background: var(--danger-light);
+      color: var(--danger);
+    }
+
+    .notification-status.passed {
+      background: var(--secondary-light);
+      color: var(--secondary);
+    }
+
+    .notification-status.pending {
+      background: var(--warning-light);
+      color: var(--warning);
+    }
+
+    .notification-status.confirmed {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .notification-status svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Empty State */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 24px;
+      text-align: center;
+    }
+
+    .empty-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--bg-main);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .empty-icon svg {
+      width: 40px;
+      height: 40px;
+      color: var(--text-secondary);
+    }
+
+    .empty-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .empty-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 430px;
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      padding: 12px 24px;
+      padding-bottom: calc(12px + env(safe-area-inset-bottom));
+      display: flex;
+      justify-content: space-around;
+      z-index: 10;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 16px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-radius: 12px;
+    }
+
+    .nav-item:hover {
+      background: var(--bg-main);
+    }
+
+    .nav-item.active {
+      color: var(--primary);
+    }
+
+    .nav-item svg {
+      width: 24px;
+      height: 24px;
+      color: var(--text-secondary);
+    }
+
+    .nav-item.active svg {
+      color: var(--primary);
+    }
+
+    .nav-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .nav-item.active .nav-label {
+      color: var(--primary);
+    }
+
+    /* Notification Detail Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 100;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      background: var(--white);
+      width: 100%;
+      max-width: 430px;
+      max-height: 80vh;
+      border-radius: 24px 24px 0 0;
+      padding: 8px 0 0 0;
+      animation: slideUp 0.3s ease;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .modal-handle {
+      width: 40px;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      margin: 8px auto 16px;
+    }
+
+    .modal-scroll {
+      padding: 0 24px 32px;
+      padding-bottom: calc(32px + env(safe-area-inset-bottom));
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .modal-type-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-type-icon.danger {
+      background: var(--danger-light);
+      color: var(--danger);
+    }
+
+    .modal-type-icon svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .modal-title-area h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .modal-title-area p {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .modal-section {
+      margin-bottom: 24px;
+    }
+
+    .modal-section-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+
+    .modal-info-card {
+      background: var(--bg-main);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .modal-info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-info-row:last-child {
+      border-bottom: none;
+    }
+
+    .modal-info-label {
+      font-size: 15px;
+      color: var(--text-secondary);
+    }
+
+    .modal-info-value {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .modal-info-value.highlight {
+      color: var(--danger);
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .quiz-result {
+      background: var(--neutral-100); /* 사용자의 눈 피로도 감소를 위해 중립적인 배경색으로 변경 */
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .quiz-result-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .quiz-result-header svg {
+      width: 24px;
+      height: 24px;
+      color: var(--danger);
+    }
+
+    .quiz-result-header span {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--danger);
+    }
+
+    .quiz-item {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    .quiz-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .quiz-question {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .quiz-answers {
+      display: flex;
+      gap: 16px;
+    }
+
+    .quiz-answer {
+      font-size: 15px;
+    }
+
+    .quiz-answer.correct {
+      color: var(--secondary);
+      font-weight: 600;
+    }
+
+    .quiz-answer.wrong {
+      color: var(--danger);
+      font-weight: 600;
+      text-decoration: line-through;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .modal-btn {
+      flex: 1;
+      padding: 16px 24px;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .modal-btn.secondary {
+      background: var(--bg-main);
+      color: var(--text-secondary);
+    }
+
+    .modal-btn.primary {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .modal-btn.danger {
+      background: var(--danger);
+      color: var(--white);
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-frame">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-inner">
+        <div class="header-left">
+          <button class="back-button" onclick="location.href='05-guardian-dashboard.html'">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"/>
+            </svg>
+          </button>
+          <h1 class="header-title">알림 이력</h1>
+        </div>
+        <button class="filter-button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs">
+      <button class="filter-tab active" data-filter="all">전체<span class="badge">12</span></button>
+      <button class="filter-tab" data-filter="blocked">차단됨<span class="badge">3</span></button>
+      <button class="filter-tab" data-filter="passed">통과<span class="badge">8</span></button>
+      <button class="filter-tab" data-filter="pending">대기중<span class="badge">1</span></button>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Today -->
+      <div class="date-group">
+        <div class="date-header">
+          <span class="date-text">오늘</span>
+          <div class="date-line"></div>
+        </div>
+
+        <div class="notification-list">
+          <div class="notification-card unread danger" onclick="showDetail('blocked')">
+            <div class="notification-header">
+              <div class="notification-type">
+                <div class="type-icon danger">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="notification-title">퀴즈 실패 - 거래 차단</div>
+                  <div class="notification-patient">홍어머니</div>
+                </div>
+              </div>
+              <span class="notification-time">10분 전</span>
+            </div>
+            <div class="notification-body">
+              <div class="notification-details">
+                <div class="detail-row">
+                  <span class="detail-label">금액</span>
+                  <span class="detail-value amount">8,500,000원</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">수신자</span>
+                  <span class="detail-value">김**</span>
+                </div>
+              </div>
+              <span class="notification-status blocked">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="15" y1="9" x2="9" y2="15"/>
+                  <line x1="9" y1="9" x2="15" y2="15"/>
+                </svg>
+                거래 차단됨
+              </span>
+            </div>
+          </div>
+
+          <div class="notification-card unread warning" onclick="showDetail('pending')">
+            <div class="notification-header">
+              <div class="notification-type">
+                <div class="type-icon warning">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="notification-title">고액 거래 감지</div>
+                  <div class="notification-patient">홍어머니</div>
+                </div>
+              </div>
+              <span class="notification-time">2시간 전</span>
+            </div>
+            <div class="notification-body">
+              <div class="notification-details">
+                <div class="detail-row">
+                  <span class="detail-label">금액</span>
+                  <span class="detail-value amount">5,000,000원</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">수신자</span>
+                  <span class="detail-value">박**</span>
+                </div>
+              </div>
+              <span class="notification-status pending">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+                퀴즈 진행중
+              </span>
+            </div>
+          </div>
+
+          <div class="notification-card success" onclick="showDetail('passed')">
+            <div class="notification-header">
+              <div class="notification-type">
+                <div class="type-icon success">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="notification-title">퀴즈 통과 - 거래 완료</div>
+                  <div class="notification-patient">홍어머니</div>
+                </div>
+              </div>
+              <span class="notification-time">5시간 전</span>
+            </div>
+            <div class="notification-body">
+              <div class="notification-details">
+                <div class="detail-row">
+                  <span class="detail-label">금액</span>
+                  <span class="detail-value amount">3,200,000원</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">수신자</span>
+                  <span class="detail-value">이**</span>
+                </div>
+              </div>
+              <span class="notification-status passed">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                정상 처리됨
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Yesterday -->
+      <div class="date-group">
+        <div class="date-header">
+          <span class="date-text">어제</span>
+          <div class="date-line"></div>
+        </div>
+
+        <div class="notification-list">
+          <div class="notification-card success">
+            <div class="notification-header">
+              <div class="notification-type">
+                <div class="type-icon success">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="notification-title">퀴즈 통과 - 거래 완료</div>
+                  <div class="notification-patient">홍어머니</div>
+                </div>
+              </div>
+              <span class="notification-time">어제 오후 3:24</span>
+            </div>
+            <div class="notification-body">
+              <div class="notification-details">
+                <div class="detail-row">
+                  <span class="detail-label">금액</span>
+                  <span class="detail-value amount">7,000,000원</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">수신자</span>
+                  <span class="detail-value">정**</span>
+                </div>
+              </div>
+              <span class="notification-status passed">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                정상 처리됨
+              </span>
+            </div>
+          </div>
+
+          <div class="notification-card danger">
+            <div class="notification-header">
+              <div class="notification-type">
+                <div class="type-icon danger">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="notification-title">퀴즈 실패 - 거래 차단</div>
+                  <div class="notification-patient">홍어머니</div>
+                </div>
+              </div>
+              <span class="notification-time">어제 오전 11:08</span>
+            </div>
+            <div class="notification-body">
+              <div class="notification-details">
+                <div class="detail-row">
+                  <span class="detail-label">금액</span>
+                  <span class="detail-value amount">12,000,000원</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">수신자</span>
+                  <span class="detail-value">최**</span>
+                </div>
+              </div>
+              <span class="notification-status blocked">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="15" y1="9" x2="9" y2="15"/>
+                  <line x1="9" y1="9" x2="15" y2="15"/>
+                </svg>
+                거래 차단됨
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Last Week -->
+      <div class="date-group">
+        <div class="date-header">
+          <span class="date-text">이번 주</span>
+          <div class="date-line"></div>
+        </div>
+
+        <div class="notification-list">
+          <div class="notification-card success">
+            <div class="notification-header">
+              <div class="notification-type">
+                <div class="type-icon success">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="notification-title">퀴즈 통과 - 거래 완료</div>
+                  <div class="notification-patient">홍어머니</div>
+                </div>
+              </div>
+              <span class="notification-time">1월 23일</span>
+            </div>
+            <div class="notification-body">
+              <div class="notification-details">
+                <div class="detail-row">
+                  <span class="detail-label">금액</span>
+                  <span class="detail-value amount">5,500,000원</span>
+                </div>
+              </div>
+              <span class="notification-status passed">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                정상 처리됨
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+      <button class="nav-item" onclick="location.href='05-guardian-dashboard.html'">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        <span class="nav-label">홈</span>
+      </button>
+      <button class="nav-item" onclick="location.href='06-guardian-link.html'">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        <span class="nav-label">가족</span>
+      </button>
+      <button class="nav-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
+        <span class="nav-label">알림</span>
+      </button>
+      <button class="nav-item" onclick="location.href='07-guardian-settings.html'">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+        <span class="nav-label">설정</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Detail Modal -->
+  <div class="modal-overlay" id="detailModal">
+    <div class="modal-content">
+      <div class="modal-handle"></div>
+      <div class="modal-scroll">
+        <div class="modal-header">
+          <div class="modal-type-icon danger">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+            </svg>
+          </div>
+          <div class="modal-title-area">
+            <h3>퀴즈 실패 알림</h3>
+            <p>홍어머니 · 오늘 오후 2:35</p>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title">거래 정보</div>
+          <div class="modal-info-card">
+            <div class="modal-info-row">
+              <span class="modal-info-label">거래 금액</span>
+              <span class="modal-info-value highlight">8,500,000원</span>
+            </div>
+            <div class="modal-info-row">
+              <span class="modal-info-label">수신자</span>
+              <span class="modal-info-value">김** (010-****-5678)</span>
+            </div>
+            <div class="modal-info-row">
+              <span class="modal-info-label">거래 유형</span>
+              <span class="modal-info-value">계좌 이체</span>
+            </div>
+            <div class="modal-info-row">
+              <span class="modal-info-label">발생 시각</span>
+              <span class="modal-info-value">2024.01.26 14:35:22</span>
+            </div>
+            <div class="modal-info-row">
+              <span class="modal-info-label">거래 상태</span>
+              <span class="modal-info-value" style="color: var(--danger);">차단됨 (ON_HOLD)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title">퀴즈 결과</div>
+          <div class="quiz-result">
+            <div class="quiz-result-header">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="15" y1="9" x2="9" y2="15"/>
+                <line x1="9" y1="9" x2="15" y2="15"/>
+              </svg>
+              <span>실패 (1/3 정답)</span>
+            </div>
+            <div class="quiz-item">
+              <div class="quiz-question">Q1. 이체 금액은 얼마인가요?</div>
+              <div class="quiz-answers">
+                <span class="quiz-answer correct">정답: 850만원</span>
+                <span class="quiz-answer wrong">응답: 500만원</span>
+              </div>
+            </div>
+            <div class="quiz-item">
+              <div class="quiz-question">Q2. 누구에게 보내시나요?</div>
+              <div class="quiz-answers">
+                <span class="quiz-answer correct">정답: 김**</span>
+                <span class="quiz-answer wrong">응답: 박**</span>
+              </div>
+            </div>
+            <div class="quiz-item">
+              <div class="quiz-question">Q3. 무엇을 위한 이체인가요?</div>
+              <div class="quiz-answers">
+                <span class="quiz-answer correct">응답: 병원비</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-buttons">
+          <button class="modal-btn secondary" onclick="closeModal()">닫기</button>
+          <button class="modal-btn danger">환자에게 전화</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Filter tabs
+    const filterTabs = document.querySelectorAll('.filter-tab');
+    filterTabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        filterTabs.forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        // Filter logic would go here
+      });
+    });
+
+    // Show detail modal
+    function showDetail(type) {
+      document.getElementById('detailModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('detailModal').classList.remove('active');
+    }
+
+    // Close modal on overlay click
+    document.getElementById('detailModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
+  </script>
+</body>
+</html>

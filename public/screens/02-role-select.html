@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>역할 선택 - 케어페이플러스</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #2563EB;
+      --primary-dark: #1D4ED8;
+      --primary-light: #DBEAFE;
+      --secondary: #10B981;
+      --secondary-light: #D1FAE5;
+      --text-primary: #1E293B;
+      --text-secondary: #64748B;
+      --bg-main: #F8FAFC;
+      --white: #FFFFFF;
+      --border: #E2E8F0;
+      --shadow-soft: 0 4px 24px rgba(37, 99, 235, 0.12);
+      --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.08);
+    }
+
+    body {
+      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-main);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* Mobile Container */
+    .mobile-frame {
+      max-width: 430px;
+      min-height: 100vh;
+      margin: 0 auto;
+      background: var(--white);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      background: var(--white);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .back-button {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-main);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .back-button:hover {
+      background: var(--primary-light);
+    }
+
+    .back-button svg {
+      width: 24px;
+      height: 24px;
+      color: var(--text-primary);
+    }
+
+    .header-title {
+      flex: 1;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 700;
+      margin-right: 44px;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Progress Indicator */
+    .progress {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+
+    .progress-step {
+      width: 32px;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .progress-step.active {
+      background: var(--primary);
+      width: 48px;
+    }
+
+    /* Title Section */
+    .title-section {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .title-section h1 {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+
+    .title-section p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Role Cards */
+    .role-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      flex: 1;
+    }
+
+    .role-card {
+      background: var(--white);
+      border: 2px solid var(--border);
+      border-radius: 24px;
+      padding: 28px 24px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .role-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .role-card.guardian::before {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(37, 99, 235, 0.02) 100%);
+    }
+
+    .role-card.patient::before {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(16, 185, 129, 0.02) 100%);
+    }
+
+    .role-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-card);
+    }
+
+    .role-card:hover::before {
+      opacity: 1;
+    }
+
+    .role-card.selected {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .role-card.selected.patient {
+      border-color: var(--secondary);
+      background: var(--secondary-light);
+    }
+
+    .role-card-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .role-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .role-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .guardian .role-icon {
+      background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+    }
+
+    .patient .role-icon {
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    }
+
+    .role-icon svg {
+      width: 32px;
+      height: 32px;
+      color: var(--white);
+    }
+
+    .role-title-wrap h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .role-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .guardian .role-badge {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .patient .role-badge {
+      background: var(--secondary-light);
+      color: var(--secondary);
+    }
+
+    .role-description {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .role-features {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .role-feature {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-primary);
+    }
+
+    .role-feature svg {
+      width: 18px;
+      height: 18px;
+      color: var(--secondary);
+    }
+
+    /* Selection Indicator */
+    .select-indicator {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 28px;
+      height: 28px;
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .role-card.selected .select-indicator {
+      border-color: var(--primary);
+      background: var(--primary);
+    }
+
+    .role-card.selected.patient .select-indicator {
+      border-color: var(--secondary);
+      background: var(--secondary);
+    }
+
+    .select-indicator svg {
+      width: 16px;
+      height: 16px;
+      color: var(--white);
+      opacity: 0;
+      transform: scale(0);
+      transition: all 0.3s ease;
+    }
+
+    .role-card.selected .select-indicator svg {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Bottom Action */
+    .bottom-action {
+      padding: 20px 24px;
+      padding-bottom: calc(20px + env(safe-area-inset-bottom));
+      background: var(--white);
+      border-top: 1px solid var(--border);
+    }
+
+    .continue-button {
+      width: 100%;
+      padding: 18px 32px;
+      background: var(--primary);
+      color: var(--white);
+      font-size: 18px;
+      font-weight: 700;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .continue-button:disabled {
+      background: var(--border);
+      color: var(--text-secondary);
+      cursor: not-allowed;
+    }
+
+    .continue-button:not(:disabled):hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(37, 99, 235, 0.35);
+    }
+
+    .continue-button svg {
+      width: 20px;
+      height: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-frame">
+    <!-- Header -->
+    <header class="header">
+      <button class="back-button" onclick="history.back()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <span class="header-title">가입 시작</span>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Progress -->
+      <div class="progress">
+        <div class="progress-step active"></div>
+        <div class="progress-step"></div>
+        <div class="progress-step"></div>
+      </div>
+
+      <!-- Title -->
+      <div class="title-section">
+        <h1>역할을 선택해주세요</h1>
+        <p>어떤 역할로 서비스를 이용하실 건가요?<br>역할에 따라 기능이 달라져요</p>
+      </div>
+
+      <!-- Role Cards -->
+      <div class="role-cards">
+        <!-- Guardian Card -->
+        <div class="role-card guardian" onclick="selectRole(this, 'guardian')">
+          <div class="select-indicator">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <div class="role-card-inner">
+            <div class="role-header">
+              <div class="role-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </div>
+              <div class="role-title-wrap">
+                <h2>보호자</h2>
+                <span class="role-badge">가족 · 후견인</span>
+              </div>
+            </div>
+            <p class="role-description">
+              소중한 가족의 고액 거래를 함께 확인하고<br>
+              실시간 알림을 받으실 수 있어요
+            </p>
+            <div class="role-features">
+              <div class="role-feature">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>고액 거래 실시간 알림 수신</span>
+              </div>
+              <div class="role-feature">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>거래 기준 금액 설정</span>
+              </div>
+              <div class="role-feature">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>거래 이력 조회</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Patient Card -->
+        <div class="role-card patient" onclick="selectRole(this, 'patient')">
+          <div class="select-indicator">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <div class="role-card-inner">
+            <div class="role-header">
+              <div class="role-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </div>
+              <div class="role-title-wrap">
+                <h2>이용자</h2>
+                <span class="role-badge">본인</span>
+              </div>
+            </div>
+            <p class="role-description">
+              고액 거래 시 간단한 확인 과정을 거쳐<br>
+              더 안전하게 거래하실 수 있어요
+            </p>
+            <div class="role-features">
+              <div class="role-feature">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>고액 거래 전 간단 확인 퀴즈</span>
+              </div>
+              <div class="role-feature">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>믿을 수 있는 보호자와 연결</span>
+              </div>
+              <div class="role-feature">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>실수로 인한 금융 피해 예방</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Bottom Action -->
+    <div class="bottom-action">
+      <button class="continue-button" id="continueBtn" disabled onclick="continueToSignup()">
+        선택하고 계속하기
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    let selectedRole = null;
+
+    function selectRole(card, role) {
+      // Remove selection from all cards
+      document.querySelectorAll('.role-card').forEach(c => {
+        c.classList.remove('selected');
+      });
+
+      // Add selection to clicked card
+      card.classList.add('selected');
+      selectedRole = role;
+
+      // Enable continue button
+      document.getElementById('continueBtn').disabled = false;
+    }
+
+    function continueToSignup() {
+      if (selectedRole) {
+        // Store role in sessionStorage for signup page
+        sessionStorage.setItem('selectedRole', selectedRole);
+        location.href = '03-signup.html';
+      }
+    }
+  </script>
+</body>
+</html>

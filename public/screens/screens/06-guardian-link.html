@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>가족 연동 - 케어페이플러스</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #2563EB;
+      --primary-dark: #1D4ED8;
+      --primary-light: #DBEAFE;
+      --secondary: #10B981;
+      --secondary-light: #D1FAE5;
+      --danger: #EF4444;
+      --warning: #F59E0B;
+      --warning-light: #FEF3C7;
+      --text-primary: #1E293B;
+      --text-secondary: #64748B;
+      --bg-main: #F8FAFC;
+      --white: #FFFFFF;
+      --border: #E2E8F0;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-main);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .mobile-frame {
+      max-width: 430px;
+      min-height: 100vh;
+      margin: 0 auto;
+      background: var(--white);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      background: var(--white);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .back-button {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-main);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    .back-button svg {
+      width: 24px;
+      height: 24px;
+      color: var(--text-primary);
+    }
+
+    .header-title {
+      flex: 1;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 700;
+      margin-right: 44px;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Title Section */
+    .title-section {
+      margin-bottom: 32px;
+    }
+
+    .title-section h1 {
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .title-section p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Search Input */
+    .search-wrapper {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 16px 20px 16px 52px;
+      font-size: 16px;
+      font-family: inherit;
+      color: var(--text-primary);
+      background: var(--bg-main);
+      border: 2px solid transparent;
+      border-radius: 16px;
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .search-input:focus {
+      background: var(--white);
+      border-color: var(--primary);
+    }
+
+    .search-input::placeholder {
+      color: var(--text-secondary);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 22px;
+      height: 22px;
+      color: var(--text-secondary);
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: var(--bg-main);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tab.active {
+      color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    /* Contact List */
+    .contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      background: var(--bg-main);
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 2px solid transparent;
+    }
+
+    .contact-item:hover {
+      background: var(--primary-light);
+    }
+
+    .contact-item.selected {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .contact-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .contact-info {
+      flex: 1;
+    }
+
+    .contact-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .contact-phone {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .contact-check {
+      width: 26px;
+      height: 26px;
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .contact-item.selected .contact-check {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .contact-check svg {
+      width: 14px;
+      height: 14px;
+      color: var(--white);
+      opacity: 0;
+      transform: scale(0);
+      transition: all 0.2s ease;
+    }
+
+    .contact-item.selected .contact-check svg {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Pending Request Card */
+    .pending-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      background: var(--warning-light);
+      border-radius: 16px;
+      margin-bottom: 8px;
+    }
+
+    .pending-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--warning);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .pending-info {
+      flex: 1;
+    }
+
+    .pending-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .pending-status {
+      font-size: 14px;
+      color: var(--warning);
+      font-weight: 500;
+    }
+
+    .pending-action {
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--warning);
+      background: var(--white);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    /* Empty State */
+    .empty-state {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .empty-icon {
+      width: 100px;
+      height: 100px;
+      background: var(--bg-main);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .empty-icon svg {
+      width: 48px;
+      height: 48px;
+      color: var(--text-secondary);
+    }
+
+    .empty-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .empty-description {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Permission Request */
+    .permission-card {
+      background: var(--primary-light);
+      border-radius: 20px;
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .permission-icon {
+      width: 64px;
+      height: 64px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+
+    .permission-icon svg {
+      width: 32px;
+      height: 32px;
+      color: var(--white);
+    }
+
+    .permission-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .permission-description {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+
+    .permission-button {
+      width: 100%;
+      padding: 14px 24px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--white);
+      background: var(--primary);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    /* Bottom Action */
+    .bottom-action {
+      padding: 20px 24px;
+      padding-bottom: calc(20px + env(safe-area-inset-bottom));
+      background: var(--white);
+      border-top: 1px solid var(--border);
+    }
+
+    .send-button {
+      width: 100%;
+      padding: 18px 32px;
+      background: var(--primary);
+      color: var(--white);
+      font-size: 18px;
+      font-weight: 700;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .send-button:disabled {
+      background: var(--border);
+      color: var(--text-secondary);
+      cursor: not-allowed;
+    }
+
+    .send-button:not(:disabled):hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(37, 99, 235, 0.35);
+    }
+
+    .send-button svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+    }
+
+    .modal {
+      width: calc(100% - 48px);
+      max-width: 360px;
+      background: var(--white);
+      border-radius: 24px;
+      padding: 32px 24px;
+      text-align: center;
+      animation: modalIn 0.3s ease;
+    }
+
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .modal-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .modal-icon.success {
+      background: var(--secondary-light);
+    }
+
+    .modal-icon.warning {
+      background: var(--warning-light);
+    }
+
+    .modal-icon svg {
+      width: 36px;
+      height: 36px;
+    }
+
+    .modal-icon.success svg {
+      color: var(--secondary);
+    }
+
+    .modal-icon.warning svg {
+      color: var(--warning);
+    }
+
+    .modal-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .modal-description {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .modal-button {
+      width: 100%;
+      padding: 16px 24px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--white);
+      background: var(--primary);
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-frame">
+    <!-- Header -->
+    <header class="header">
+      <button class="back-button" onclick="history.back()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <span class="header-title">가족 연동</span>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Title -->
+      <div class="title-section">
+        <h1>연동할 가족을 선택해주세요</h1>
+        <p>연락처에서 보호하고 싶은 가족을 선택하면<br>연동 요청을 보내드려요</p>
+      </div>
+
+      <!-- Search -->
+      <div class="search-wrapper">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" class="search-input" placeholder="이름 또는 전화번호 검색" id="searchInput" oninput="filterContacts()">
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab(this, 'contacts')">연락처</button>
+        <button class="tab" onclick="switchTab(this, 'pending')">대기 중 (1)</button>
+      </div>
+
+      <!-- Contact List -->
+      <div class="contact-list" id="contactList">
+        <!-- Pending Requests (shown in pending tab) -->
+        <div class="pending-card" id="pendingCard" style="display: none;">
+          <div class="pending-avatar">아</div>
+          <div class="pending-info">
+            <p class="pending-name">홍아버지</p>
+            <p class="pending-status">수락 대기 중</p>
+          </div>
+          <button class="pending-action">취소</button>
+        </div>
+
+        <!-- Contact Items -->
+        <div class="contact-item" onclick="toggleContact(this)" data-name="홍어머니" data-phone="010-1234-5678">
+          <div class="contact-avatar" style="background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%);">어</div>
+          <div class="contact-info">
+            <p class="contact-name">홍어머니</p>
+            <p class="contact-phone">010-1234-5678</p>
+          </div>
+          <div class="contact-check">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="contact-item" onclick="toggleContact(this)" data-name="김삼촌" data-phone="010-2345-6789">
+          <div class="contact-avatar" style="background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);">삼</div>
+          <div class="contact-info">
+            <p class="contact-name">김삼촌</p>
+            <p class="contact-phone">010-2345-6789</p>
+          </div>
+          <div class="contact-check">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="contact-item" onclick="toggleContact(this)" data-name="이고모" data-phone="010-3456-7890">
+          <div class="contact-avatar" style="background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);">고</div>
+          <div class="contact-info">
+            <p class="contact-name">이고모</p>
+            <p class="contact-phone">010-3456-7890</p>
+          </div>
+          <div class="contact-check">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="contact-item" onclick="toggleContact(this)" data-name="박할머니" data-phone="010-4567-8901">
+          <div class="contact-avatar" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%);">할</div>
+          <div class="contact-info">
+            <p class="contact-name">박할머니</p>
+            <p class="contact-phone">010-4567-8901</p>
+          </div>
+          <div class="contact-check">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="contact-item" onclick="toggleContact(this)" data-name="최외삼촌" data-phone="010-5678-9012">
+          <div class="contact-avatar" style="background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);">외</div>
+          <div class="contact-info">
+            <p class="contact-name">최외삼촌</p>
+            <p class="contact-phone">010-5678-9012</p>
+          </div>
+          <div class="contact-check">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Bottom Action -->
+    <div class="bottom-action">
+      <button class="send-button" id="sendBtn" disabled onclick="sendRequest()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+        연동 요청 보내기
+      </button>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="successModal">
+      <div class="modal">
+        <div class="modal-icon success">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <h3 class="modal-title">연동 요청을 보냈어요</h3>
+        <p class="modal-description">
+          상대방이 수락하면 고액 거래 알림을<br>
+          받으실 수 있어요
+        </p>
+        <button class="modal-button" onclick="closeModal()">확인</button>
+      </div>
+    </div>
+
+    <!-- Not Found Modal -->
+    <div class="modal-overlay" id="notFoundModal">
+      <div class="modal">
+        <div class="modal-icon warning">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+        </div>
+        <h3 class="modal-title">앱 사용자가 아니에요</h3>
+        <p class="modal-description">
+          상대가 아직 앱을 사용 중이 아닙니다.<br>
+          초대 링크를 보내시겠어요?
+        </p>
+        <button class="modal-button" onclick="shareInvite()">초대 링크 보내기</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let selectedContact = null;
+
+    function toggleContact(element) {
+      // Remove selection from all
+      document.querySelectorAll('.contact-item').forEach(item => {
+        item.classList.remove('selected');
+      });
+
+      // Add selection to clicked item
+      element.classList.add('selected');
+      selectedContact = {
+        name: element.dataset.name,
+        phone: element.dataset.phone
+      };
+
+      // Enable send button
+      document.getElementById('sendBtn').disabled = false;
+    }
+
+    function filterContacts() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const contacts = document.querySelectorAll('.contact-item');
+
+      contacts.forEach(contact => {
+        const name = contact.dataset.name.toLowerCase();
+        const phone = contact.dataset.phone;
+
+        if (name.includes(query) || phone.includes(query)) {
+          contact.style.display = 'flex';
+        } else {
+          contact.style.display = 'none';
+        }
+      });
+    }
+
+    function switchTab(btn, tab) {
+      // Update tab buttons
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Show/hide content
+      const contacts = document.querySelectorAll('.contact-item');
+      const pending = document.getElementById('pendingCard');
+
+      if (tab === 'contacts') {
+        contacts.forEach(c => c.style.display = 'flex');
+        pending.style.display = 'none';
+      } else {
+        contacts.forEach(c => c.style.display = 'none');
+        pending.style.display = 'flex';
+      }
+    }
+
+    function sendRequest() {
+      if (!selectedContact) return;
+
+      // Simulate API check - randomly show success or not found
+      const isAppUser = Math.random() > 0.3;
+
+      if (isAppUser) {
+        document.getElementById('successModal').classList.add('show');
+      } else {
+        document.getElementById('notFoundModal').classList.add('show');
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('successModal').classList.remove('show');
+      document.getElementById('notFoundModal').classList.remove('show');
+      // Go back to dashboard
+      location.href = '05-guardian-dashboard.html';
+    }
+
+    function shareInvite() {
+      // In real app, use Web Share API
+      alert('초대 링크가 복사되었습니다!');
+      closeModal();
+    }
+  </script>
+</body>
+</html>
