@@ -1,6 +1,7 @@
 import "./css/style.css";
 
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import Header from "@/components/ui/header";
 
 const inter = Inter({
@@ -41,6 +42,19 @@ export default function RootLayout({
           <Header />
           {children}
         </div>
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=G-9FE4VRBVE8`}
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+          
+            gtag('config', 'G-9FE4VRBVE8');
+          `}
+        </Script>
       </body>
     </html>
   );
