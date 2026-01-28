@@ -123,7 +123,6 @@ export default function Workflows() {
                 >
                   <div className="flex h-full flex-col bg-linear-to-br from-blue-500/10 to-blue-400/5 p-6">
                     <p className="mb-2 text-center text-sm font-medium text-blue-700">인지 확인 퀴즈 화면</p>
-                    <p className="mb-3 text-center text-xs text-blue-400 lg:hidden">탭하여 돌아가기</p>
                     <div className="mx-auto w-full max-w-[300px] flex-1 overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-sm">
                       <div className="relative h-full w-full">
                         <iframe
@@ -141,6 +140,7 @@ export default function Workflows() {
                         />
                       </div>
                     </div>
+                    <p className="mt-2 text-center text-xs text-blue-400 lg:hidden">탭하여 돌아가기</p>
                   </div>
                 </div>
               }
@@ -184,7 +184,6 @@ export default function Workflows() {
                 >
                   <div className="flex h-full flex-col bg-linear-to-br from-emerald-500/10 to-emerald-400/5 p-6">
                     <p className="mb-2 text-center text-sm font-medium text-emerald-700">실시간 알림 화면</p>
-                    <p className="mb-3 text-center text-xs text-emerald-400 lg:hidden">탭하여 돌아가기</p>
                     <div className="mx-auto w-full max-w-[300px] flex-1 overflow-hidden rounded-2xl border border-emerald-100 bg-white shadow-sm">
                       <div className="relative h-full w-full">
                         <iframe
@@ -202,6 +201,7 @@ export default function Workflows() {
                         />
                       </div>
                     </div>
+                    <p className="mt-2 text-center text-xs text-emerald-400 lg:hidden">탭하여 돌아가기</p>
                   </div>
                 </div>
               }
@@ -247,7 +247,6 @@ export default function Workflows() {
                 >
                   <div className="flex h-full flex-col bg-linear-to-br from-amber-500/10 to-amber-400/5 p-6">
                     <p className="mb-2 text-center text-sm font-medium text-amber-700">가족 연동 화면</p>
-                    <p className="mb-3 text-center text-xs text-amber-400 lg:hidden">탭하여 돌아가기</p>
                     <div className="mx-auto w-full max-w-[300px] flex-1 overflow-hidden rounded-2xl border border-amber-100 bg-white shadow-sm">
                       <div className="relative h-full w-full">
                         <iframe
@@ -265,6 +264,7 @@ export default function Workflows() {
                         />
                       </div>
                     </div>
+                    <p className="mt-2 text-center text-xs text-amber-400 lg:hidden">탭하여 돌아가기</p>
                   </div>
                 </div>
               }

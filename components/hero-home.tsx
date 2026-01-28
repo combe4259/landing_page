@@ -15,16 +15,6 @@ export default function HeroHome() {
         <div className="py-12 md:py-20">
           {/* Section header */}
           <div className="pb-12 text-center md:pb-20">
-            <div
-              className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-1.5 text-sm text-blue-600"
-              data-aos="fade-up"
-            >
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-              </span>
-              안전한 금융 생활의 시작
-            </div>
             <h1
               className="pb-5 text-4xl font-bold text-gray-900 md:text-6xl"
               data-aos="fade-up"
@@ -95,22 +85,33 @@ export default function HeroHome() {
             data-aos-delay={600}
           >
             <PhoneMockup src="/screens/01-landing.html" title="가디언 프로텍트 앱 미리보기" />
-            {/* Floating badges */}
-            <div className="absolute -left-16 top-20 hidden animate-bounce rounded-2xl bg-blue-500/10 border border-blue-500/20 p-3 backdrop-blur-sm lg:block" style={{ animationDuration: "3s" }}>
-              <div className="flex items-center gap-2 text-sm text-blue-700">
-                <svg className="h-5 w-5 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                </svg>
-                실시간 보호
+            {/* Floating toast notifications */}
+            <div className="absolute -left-40 top-16 hidden lg:block" data-aos="fade-right" data-aos-delay={800}>
+              <div className="flex items-start gap-3 rounded-2xl border border-gray-200 bg-white/95 px-4 py-3 shadow-lg backdrop-blur-md" style={{ minWidth: "220px" }}>
+                <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-red-500">
+                  <svg className="h-4 w-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                    <line x1="12" y1="9" x2="12" y2="13" />
+                    <line x1="12" y1="17" x2="12.01" y2="17" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold text-gray-900">고액 이체 감지됨</p>
+                  <p className="mt-0.5 text-xs text-gray-500">500만원 이체 시도 · 보호자 확인 요청</p>
+                </div>
               </div>
             </div>
-            <div className="absolute -right-20 bottom-32 hidden animate-bounce rounded-2xl bg-emerald-500/10 border border-emerald-500/20 p-3 backdrop-blur-sm lg:block" style={{ animationDuration: "3.5s", animationDelay: "0.5s" }}>
-              <div className="flex items-center gap-2 text-sm text-emerald-700">
-                <svg className="h-5 w-5 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                  <polyline points="22 4 12 14.01 9 11.01" />
-                </svg>
-                인지 확인 완료
+            <div className="absolute -right-44 bottom-28 hidden lg:block" data-aos="fade-left" data-aos-delay={1200}>
+              <div className="flex items-start gap-3 rounded-2xl border border-gray-200 bg-white/95 px-4 py-3 shadow-lg backdrop-blur-md" style={{ minWidth: "220px" }}>
+                <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-emerald-500">
+                  <svg className="h-4 w-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold text-gray-900">보호자 승인 완료</p>
+                  <p className="mt-0.5 text-xs text-gray-500">김○○ 보호자가 거래를 승인했습니다</p>
+                </div>
               </div>
             </div>
           </div>
