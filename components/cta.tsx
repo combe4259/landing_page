@@ -13,17 +13,38 @@ declare global {
 export default function Cta() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      if (window.gtag) {
-        window.gtag("event", "generate_lead", {
-          event_category: "CTA",
-          event_label: "final_pre_register_submit",
-        });
+    if (!email || submitting) return;
+
+    setSubmitting(true);
+    setError(false);
+
+    try {
+      const res = await fetch("https://formspree.io/f/xkorlggn", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      if (res.ok) {
+        if (window.gtag) {
+          window.gtag("event", "generate_lead", {
+            event_category: "CTA",
+            event_label: "final_pre_register_submit",
+          });
+        }
+        setSubmitted(true);
+      } else {
+        setError(true);
       }
-      setSubmitted(true);
+    } catch {
+      setError(true);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -95,11 +116,17 @@ export default function Cta() {
                   />
                   <button
                     type="submit"
-                    className="btn bg-linear-to-t from-blue-600 to-blue-500 bg-[length:100%_100%] bg-[bottom] text-white shadow-[inset_0px_1px_0px_0px_--theme(--color-white/.16)] hover:bg-[length:100%_150%] whitespace-nowrap"
+                    disabled={submitting}
+                    className="btn bg-linear-to-t from-blue-600 to-blue-500 bg-[length:100%_100%] bg-[bottom] text-white shadow-[inset_0px_1px_0px_0px_--theme(--color-white/.16)] hover:bg-[length:100%_150%] whitespace-nowrap disabled:opacity-60"
                   >
-                    사전 등록
+                    {submitting ? "등록 중..." : "사전 등록"}
                   </button>
                 </div>
+                {error && (
+                  <p className="mt-3 text-sm text-red-500" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
+                    등록에 실패했습니다. 다시 시도해주세요.
+                  </p>
+                )}
                 <p className="mt-4 text-xs text-gray-500" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
                   입력하신 이메일은 출시 알림 목적으로만 사용됩니다.
                 </p>
