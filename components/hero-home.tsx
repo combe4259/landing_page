@@ -1,4 +1,12 @@
+"use client";
+
 import PhoneMockup from "@/components/phone-mockup";
+
+declare global {
+  interface Window {
+    gtag: (param1: string, param2: string, param3: object) => void;
+  }
+}
 
 export default function HeroHome() {
   return (
@@ -46,6 +54,14 @@ export default function HeroHome() {
                 <a
                   className="btn group mb-4 w-full bg-linear-to-t from-blue-600 to-blue-500 bg-[length:100%_100%] bg-[bottom] text-white shadow-[inset_0px_1px_0px_0px_--theme(--color-white/.16)] hover:bg-[length:100%_150%] sm:mb-0 sm:w-auto"
                   href="#cta"
+                  onClick={() => {
+                    if (window.gtag) {
+                      window.gtag("event", "generate_lead", {
+                        event_category: "Hero",
+                        event_label: "pre_register_button",
+                      });
+                    }
+                  }}
                 >
                   <span className="relative inline-flex items-center">
                     사전 등록하기
@@ -57,6 +73,14 @@ export default function HeroHome() {
                 <a
                   className="btn w-full bg-gray-200 text-gray-800 hover:bg-gray-300 sm:ml-4 sm:w-auto"
                   href="#features"
+                  onClick={() => {
+                    if (window.gtag) {
+                      window.gtag("event", "select_content", {
+                        content_type: "button",
+                        content_id: "learn_more_button",
+                      });
+                    }
+                  }}
                 >
                   자세히 알아보기
                 </a>

@@ -24,6 +24,11 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head>
+        <Script
+          id="contentsquare-script"
+          strategy="beforeInteractive"
+          src="https://t.contentsquare.net/uxa/6812e90f26dc4.js"
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"

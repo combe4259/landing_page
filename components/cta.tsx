@@ -4,6 +4,12 @@ import { useState } from "react";
 import Image from "next/image";
 import BlurredShape from "@/public/images/blurred-shape.svg";
 
+declare global {
+  interface Window {
+    gtag: (param1: string, param2: string, param3: object) => void;
+  }
+}
+
 export default function Cta() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -11,6 +17,12 @@ export default function Cta() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (email) {
+      if (window.gtag) {
+        window.gtag("event", "generate_lead", {
+          event_category: "CTA",
+          event_label: "final_pre_register_submit",
+        });
+      }
       setSubmitted(true);
     }
   };
