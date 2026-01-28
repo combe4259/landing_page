@@ -1,4 +1,61 @@
+"use client";
+
+import { useState } from "react";
 import Spotlight from "@/components/spotlight";
+
+function FlipCard({
+  color,
+  frontContent,
+  backContent,
+}: {
+  color: "blue" | "emerald" | "amber";
+  frontContent: React.ReactNode;
+  backContent: React.ReactNode;
+}) {
+  const [flipped, setFlipped] = useState(false);
+
+  const colorMap = {
+    blue: {
+      bg: "bg-blue-100/70",
+      before: "before:bg-blue-500/80",
+      after: "after:bg-blue-500",
+    },
+    emerald: {
+      bg: "bg-emerald-100/70",
+      before: "before:bg-emerald-500/80",
+      after: "after:bg-emerald-500",
+    },
+    amber: {
+      bg: "bg-amber-100/70",
+      before: "before:bg-amber-500/80",
+      after: "after:bg-amber-500",
+    },
+  };
+  const c = colorMap[color];
+
+  return (
+    <div
+      className="group/card h-full cursor-pointer"
+      style={{ perspective: "1600px" }}
+      onClick={() => setFlipped((f) => !f)}
+    >
+      <div
+        className={`relative h-full overflow-hidden rounded-2xl ${c.bg} p-px before:pointer-events-none before:absolute before:-left-40 before:-top-40 before:z-10 before:h-80 before:w-80 before:translate-x-[var(--mouse-x)] before:translate-y-[var(--mouse-y)] before:rounded-full ${c.before} before:opacity-0 before:blur-3xl before:transition-opacity before:duration-500 after:pointer-events-none after:absolute after:-left-48 after:-top-48 after:z-30 after:h-64 after:w-64 after:translate-x-[var(--mouse-x)] after:translate-y-[var(--mouse-y)] after:rounded-full ${c.after} after:opacity-0 after:blur-3xl after:transition-opacity after:duration-500 hover:after:opacity-20 group-hover:before:opacity-100`}
+      >
+        <div
+          className={`relative z-20 h-full transition-transform duration-600 ease-out lg:group-hover/card:[transform:rotateY(180deg)]`}
+          style={{
+            transformStyle: "preserve-3d",
+            transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
+          }}
+        >
+          {frontContent}
+          {backContent}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Workflows() {
   return (
@@ -27,12 +84,9 @@ export default function Workflows() {
           {/* Spotlight cards */}
           <Spotlight className="group mx-auto grid max-w-sm items-start gap-6 lg:max-w-none lg:grid-cols-3">
             {/* Card 1 - 인지 확인 퀴즈 */}
-            <div className="group/card h-full" style={{ perspective: "1600px" }}>
-              <div className="relative h-full overflow-hidden rounded-2xl bg-blue-100/70 p-px before:pointer-events-none before:absolute before:-left-40 before:-top-40 before:z-10 before:h-80 before:w-80 before:translate-x-[var(--mouse-x)] before:translate-y-[var(--mouse-y)] before:rounded-full before:bg-blue-500/80 before:opacity-0 before:blur-3xl before:transition-opacity before:duration-500 after:pointer-events-none after:absolute after:-left-48 after:-top-48 after:z-30 after:h-64 after:w-64 after:translate-x-[var(--mouse-x)] after:translate-y-[var(--mouse-y)] after:rounded-full after:bg-blue-500 after:opacity-0 after:blur-3xl after:transition-opacity after:duration-500 hover:after:opacity-20 group-hover:before:opacity-100">
-              <div
-                className="relative z-20 h-full transition-transform duration-600 ease-out group-hover/card:[transform:rotateY(180deg)]"
-                style={{ transformStyle: "preserve-3d" }}
-              >
+            <FlipCard
+              color="blue"
+              frontContent={
                 <div
                   className="h-full overflow-hidden rounded-[inherit] border border-gray-200 bg-white"
                   style={{ backfaceVisibility: "hidden" }}
@@ -59,7 +113,10 @@ export default function Workflows() {
                       큰 금액 거래 전, 간단한 확인 질문으로 본인의 의사를 확인하고 실수를 방지해요
                     </p>
                   </div>
+                  <div className="px-10 pb-6 text-center text-xs text-blue-400 lg:hidden">탭하여 화면 미리보기</div>
                 </div>
+              }
+              backContent={
                 <div
                   className="absolute inset-0 h-full overflow-hidden rounded-[inherit] border border-blue-100 bg-white"
                   style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
@@ -86,17 +143,14 @@ export default function Workflows() {
                       인지 확인 퀴즈 화면
                     </p>
                   </div>
+                  <div className="absolute bottom-4 left-0 right-0 text-center text-xs text-blue-400 lg:hidden">탭하여 돌아가기</div>
                 </div>
-              </div>
-            </div>
-            </div>
+              }
+            />
             {/* Card 2 - 실시간 알림 */}
-            <div className="group/card h-full" style={{ perspective: "1600px" }}>
-              <div className="relative h-full overflow-hidden rounded-2xl bg-emerald-100/70 p-px before:pointer-events-none before:absolute before:-left-40 before:-top-40 before:z-10 before:h-80 before:w-80 before:translate-x-[var(--mouse-x)] before:translate-y-[var(--mouse-y)] before:rounded-full before:bg-emerald-500/80 before:opacity-0 before:blur-3xl before:transition-opacity before:duration-500 after:pointer-events-none after:absolute after:-left-48 after:-top-48 after:z-30 after:h-64 after:w-64 after:translate-x-[var(--mouse-x)] after:translate-y-[var(--mouse-y)] after:rounded-full after:bg-emerald-500 after:opacity-0 after:blur-3xl after:transition-opacity after:duration-500 hover:after:opacity-20 group-hover:before:opacity-100">
-              <div
-                className="relative z-20 h-full transition-transform duration-600 ease-out group-hover/card:[transform:rotateY(180deg)]"
-                style={{ transformStyle: "preserve-3d" }}
-              >
+            <FlipCard
+              color="emerald"
+              frontContent={
                 <div
                   className="h-full overflow-hidden rounded-[inherit] border border-gray-200 bg-white"
                   style={{ backfaceVisibility: "hidden" }}
@@ -122,7 +176,10 @@ export default function Workflows() {
                       고액 거래 감지 시 보호자에게 즉시 푸시 알림을 보내 함께 확인할 수 있어요
                     </p>
                   </div>
+                  <div className="px-10 pb-6 text-center text-xs text-emerald-400 lg:hidden">탭하여 화면 미리보기</div>
                 </div>
+              }
+              backContent={
                 <div
                   className="absolute inset-0 h-full overflow-hidden rounded-[inherit] border border-emerald-100 bg-white"
                   style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
@@ -149,17 +206,14 @@ export default function Workflows() {
                       실시간 알림 화면
                     </p>
                   </div>
+                  <div className="absolute bottom-4 left-0 right-0 text-center text-xs text-emerald-400 lg:hidden">탭하여 돌아가기</div>
                 </div>
-              </div>
-            </div>
-            </div>
+              }
+            />
             {/* Card 3 - 가족 연동 */}
-            <div className="group/card h-full" style={{ perspective: "1600px" }}>
-              <div className="relative h-full overflow-hidden rounded-2xl bg-amber-100/70 p-px before:pointer-events-none before:absolute before:-left-40 before:-top-40 before:z-10 before:h-80 before:w-80 before:translate-x-[var(--mouse-x)] before:translate-y-[var(--mouse-y)] before:rounded-full before:bg-amber-500/80 before:opacity-0 before:blur-3xl before:transition-opacity before:duration-500 after:pointer-events-none after:absolute after:-left-48 after:-top-48 after:z-30 after:h-64 after:w-64 after:translate-x-[var(--mouse-x)] after:translate-y-[var(--mouse-y)] after:rounded-full after:bg-amber-500 after:opacity-0 after:blur-3xl after:transition-opacity after:duration-500 hover:after:opacity-20 group-hover:before:opacity-100">
-              <div
-                className="relative z-20 h-full transition-transform duration-600 ease-out group-hover/card:[transform:rotateY(180deg)]"
-                style={{ transformStyle: "preserve-3d" }}
-              >
+            <FlipCard
+              color="amber"
+              frontContent={
                 <div
                   className="h-full overflow-hidden rounded-[inherit] border border-gray-200 bg-white"
                   style={{ backfaceVisibility: "hidden" }}
@@ -187,7 +241,10 @@ export default function Workflows() {
                       믿을 수 있는 보호자와 안전하게 연결되어 거래 내역을 공유하고 관리해요
                     </p>
                   </div>
+                  <div className="px-10 pb-6 text-center text-xs text-amber-400 lg:hidden">탭하여 화면 미리보기</div>
                 </div>
+              }
+              backContent={
                 <div
                   className="absolute inset-0 h-full overflow-hidden rounded-[inherit] border border-amber-100 bg-white"
                   style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
@@ -214,10 +271,10 @@ export default function Workflows() {
                       가족 연동 화면
                     </p>
                   </div>
+                  <div className="absolute bottom-4 left-0 right-0 text-center text-xs text-amber-400 lg:hidden">탭하여 돌아가기</div>
                 </div>
-              </div>
-            </div>
-            </div>
+              }
+            />
           </Spotlight>
         </div>
       </div>
