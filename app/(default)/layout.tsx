@@ -6,6 +6,8 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 import Footer from "@/components/ui/footer";
+import StickyCta from "@/components/sticky-cta";
+import ScrollTracker from "@/components/scroll-tracker";
 
 export default function DefaultLayout({
   children,
@@ -26,6 +28,8 @@ export default function DefaultLayout({
       <main className="relative flex grow flex-col">{children}</main>
 
       <Footer />
+      <StickyCta />
+      <ScrollTracker />
     </>
   );
 }

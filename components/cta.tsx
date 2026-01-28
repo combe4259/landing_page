@@ -64,17 +64,25 @@ export default function Cta() {
               data-aos="fade-up"
               style={{ fontFamily: "'Noto Sans KR', sans-serif" }}
             >
-              사전 등록하고
+              지금 사전 등록하면
               <br />
-              가장 먼저 시작하세요
+              <span className="bg-linear-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">첫 3개월 무료</span>
             </h2>
             <p
-              className="mb-8 text-lg text-gray-600"
+              className="mb-3 text-lg text-gray-600"
               data-aos="fade-up"
               data-aos-delay={200}
               style={{ fontFamily: "'Noto Sans KR', sans-serif" }}
             >
-              출시 알림과 얼리버드 혜택을 받아보세요
+              월 1,900원으로 가족의 금융 안전을 지키세요
+            </p>
+            <p
+              className="mb-8 text-sm text-gray-500"
+              data-aos="fade-up"
+              data-aos-delay={300}
+              style={{ fontFamily: "'Noto Sans KR', sans-serif" }}
+            >
+              사전 등록자 한정 · 출시 후 자동 적용
             </p>
 
             {submitted ? (

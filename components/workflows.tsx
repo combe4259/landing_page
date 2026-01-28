@@ -5,10 +5,12 @@ import Spotlight from "@/components/spotlight";
 
 function FlipCard({
   color,
+  cardName,
   frontContent,
   backContent,
 }: {
   color: "blue" | "emerald" | "amber";
+  cardName: string;
   frontContent: React.ReactNode;
   backContent: React.ReactNode;
 }) {
@@ -37,7 +39,16 @@ function FlipCard({
     <div
       className="group/card h-full cursor-pointer"
       style={{ perspective: "1600px" }}
-      onClick={() => setFlipped((f) => !f)}
+      onClick={() => {
+        const next = !flipped;
+        setFlipped(next);
+        if (next && window.gtag) {
+          window.gtag("event", "card_flip", {
+            event_category: "Engagement",
+            event_label: cardName,
+          });
+        }
+      }}
     >
       <div
         className={`relative h-full overflow-hidden rounded-2xl ${c.bg} p-px before:pointer-events-none before:absolute before:-left-40 before:-top-40 before:z-10 before:h-80 before:w-80 before:translate-x-[var(--mouse-x)] before:translate-y-[var(--mouse-y)] before:rounded-full ${c.before} before:opacity-0 before:blur-3xl before:transition-opacity before:duration-500 after:pointer-events-none after:absolute after:-left-48 after:-top-48 after:z-30 after:h-64 after:w-64 after:translate-x-[var(--mouse-x)] after:translate-y-[var(--mouse-y)] after:rounded-full ${c.after} after:opacity-0 after:blur-3xl after:transition-opacity after:duration-500 hover:after:opacity-20 group-hover:before:opacity-100`}
@@ -86,6 +97,7 @@ export default function Workflows() {
             {/* Card 1 - 인지 확인 퀴즈 */}
             <FlipCard
               color="blue"
+              cardName="인지확인퀴즈"
               frontContent={
                 <div
                   className="h-full overflow-hidden rounded-[inherit] border border-gray-200 bg-white"
@@ -148,6 +160,7 @@ export default function Workflows() {
             {/* Card 2 - 실시간 알림 */}
             <FlipCard
               color="emerald"
+              cardName="실시간알림"
               frontContent={
                 <div
                   className="h-full overflow-hidden rounded-[inherit] border border-gray-200 bg-white"
@@ -209,6 +222,7 @@ export default function Workflows() {
             {/* Card 3 - 가족 연동 */}
             <FlipCard
               color="amber"
+              cardName="가족연동"
               frontContent={
                 <div
                   className="h-full overflow-hidden rounded-[inherit] border border-gray-200 bg-white"
