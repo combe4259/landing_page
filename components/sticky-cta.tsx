@@ -90,7 +90,7 @@ export default function StickyCta() {
         visible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
       }`}
     >
-      <div className="bg-gradient-to-r from-blue-600 to-blue-500 shadow-[0_-4px_20px_rgba(59,130,246,0.3)]">
+      <div className="bg-gradient-to-r from-blue-500/80 to-blue-400/80 shadow-[0_-4px_20px_rgba(59,130,246,0.2)] backdrop-blur-md">
         <div className="mx-auto max-w-3xl px-4 py-4">
           {/* 상단 혜택 문구 */}
           <div className="mb-3 flex items-center justify-center gap-2">
@@ -116,8 +116,8 @@ export default function StickyCta() {
           >
             <input
               type="email"
-              className="min-w-0 flex-1 rounded-xl border-0 bg-white/95 px-4 py-3 text-sm text-gray-800 placeholder-gray-400 shadow-inner focus:outline-none focus:ring-2 focus:ring-white/50"
-              placeholder="이메일 주소를 입력하세요"
+              className="min-w-0 flex-1 rounded-xl border-0 bg-white/95 px-4 py-3 text-sm text-gray-800 placeholder-gray-600 shadow-inner focus:outline-none focus:ring-2 focus:ring-white/50"
+              placeholder="이메일 입력 (분석 후 폐기)"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required

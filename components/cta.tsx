@@ -115,8 +115,8 @@ export default function Cta() {
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <input
                     type="email"
-                    className="form-input flex-1 rounded-xl bg-white/50 px-4 py-3 text-sm text-gray-800 placeholder-gray-400 border border-gray-300 focus:border-blue-500 focus:ring-0"
-                    placeholder="이메일 주소를 입력하세요"
+                    className="form-input flex-1 rounded-xl bg-white/50 px-4 py-3 text-sm text-gray-800 placeholder-gray-600 border border-gray-300 focus:border-blue-500 focus:ring-0"
+                    placeholder="이메일 입력 (관심도 분석 후 폐기)"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -135,8 +135,8 @@ export default function Cta() {
                     등록에 실패했습니다. 다시 시도해주세요.
                   </p>
                 )}
-                <p className="mt-4 text-xs text-gray-500" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
-                  입력하신 이메일은 출시 알림 목적으로만 사용됩니다.
+                <p className="mt-4 text-xs text-gray-600 font-medium" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
+                  💡 비용이 발생하지 않습니다. 사용자 관심도 분석 목적으로만 수집되며, 분석 후 폐기됩니다.
                 </p>
               </form>
             )}
