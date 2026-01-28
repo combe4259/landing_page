@@ -91,7 +91,7 @@ export default function Workflows() {
                   className="h-full overflow-hidden rounded-[inherit] border border-gray-200 bg-white"
                   style={{ backfaceVisibility: "hidden" }}
                 >
-                  <div className="flex h-72 items-center justify-center bg-linear-to-br from-blue-500/15 via-blue-400/5 to-white px-4 py-6">
+                  <div className="flex h-80 items-center justify-center bg-linear-to-br from-blue-500/15 via-blue-400/5 to-white px-4 py-6">
                     <div className="flex h-full w-full max-w-[280px] items-center justify-center rounded-[1.75rem] border border-blue-100/80 bg-white shadow-[0_20px_45px_-25px_rgba(59,130,246,0.45)] ring-1 ring-blue-100/60">
                       <div className="rounded-[1.25rem] bg-gradient-to-br from-blue-500/15 to-blue-400/5 p-7 ring-1 ring-blue-200/60">
                         <svg className="h-16 w-16 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -122,8 +122,10 @@ export default function Workflows() {
                   style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
                 >
                   <div className="flex h-full flex-col bg-linear-to-br from-blue-500/10 to-blue-400/5 p-6">
-                    <div className="mx-auto w-full max-w-[300px] overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-sm">
-                      <div className="relative mx-auto" style={{ width: "300px", height: "520px" }}>
+                    <p className="mb-2 text-center text-sm font-medium text-blue-700">인지 확인 퀴즈 화면</p>
+                    <p className="mb-3 text-center text-xs text-blue-400 lg:hidden">탭하여 돌아가기</p>
+                    <div className="mx-auto w-full max-w-[300px] flex-1 overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-sm">
+                      <div className="relative h-full w-full">
                         <iframe
                           src="/screens/10-patient-quiz.html"
                           title="인지 확인 퀴즈 화면"
@@ -139,11 +141,7 @@ export default function Workflows() {
                         />
                       </div>
                     </div>
-                    <p className="mt-4 text-center text-sm font-medium text-blue-700">
-                      인지 확인 퀴즈 화면
-                    </p>
                   </div>
-                  <div className="absolute bottom-4 left-0 right-0 text-center text-xs text-blue-400 lg:hidden">탭하여 돌아가기</div>
                 </div>
               }
             />
@@ -155,7 +153,7 @@ export default function Workflows() {
                   className="h-full overflow-hidden rounded-[inherit] border border-gray-200 bg-white"
                   style={{ backfaceVisibility: "hidden" }}
                 >
-                  <div className="flex h-72 items-center justify-center bg-linear-to-br from-emerald-500/15 via-emerald-400/5 to-white px-4 py-6">
+                  <div className="flex h-80 items-center justify-center bg-linear-to-br from-emerald-500/15 via-emerald-400/5 to-white px-4 py-6">
                     <div className="flex h-full w-full max-w-[280px] items-center justify-center rounded-[1.75rem] border border-emerald-100/80 bg-white shadow-[0_20px_45px_-25px_rgba(16,185,129,0.45)] ring-1 ring-emerald-100/60">
                       <div className="rounded-[1.25rem] bg-gradient-to-br from-emerald-500/15 to-emerald-400/5 p-7 ring-1 ring-emerald-200/60">
                         <svg className="h-16 w-16 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -185,8 +183,10 @@ export default function Workflows() {
                   style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
                 >
                   <div className="flex h-full flex-col bg-linear-to-br from-emerald-500/10 to-emerald-400/5 p-6">
-                    <div className="mx-auto w-full max-w-[300px] overflow-hidden rounded-2xl border border-emerald-100 bg-white shadow-sm">
-                      <div className="relative mx-auto" style={{ width: "300px", height: "520px" }}>
+                    <p className="mb-2 text-center text-sm font-medium text-emerald-700">실시간 알림 화면</p>
+                    <p className="mb-3 text-center text-xs text-emerald-400 lg:hidden">탭하여 돌아가기</p>
+                    <div className="mx-auto w-full max-w-[300px] flex-1 overflow-hidden rounded-2xl border border-emerald-100 bg-white shadow-sm">
+                      <div className="relative h-full w-full">
                         <iframe
                           src="/screens/08-guardian-notifications.html"
                           title="실시간 알림 화면"
@@ -202,11 +202,7 @@ export default function Workflows() {
                         />
                       </div>
                     </div>
-                    <p className="mt-4 text-center text-sm font-medium text-emerald-700">
-                      실시간 알림 화면
-                    </p>
                   </div>
-                  <div className="absolute bottom-4 left-0 right-0 text-center text-xs text-emerald-400 lg:hidden">탭하여 돌아가기</div>
                 </div>
               }
             />
@@ -218,7 +214,7 @@ export default function Workflows() {
                   className="h-full overflow-hidden rounded-[inherit] border border-gray-200 bg-white"
                   style={{ backfaceVisibility: "hidden" }}
                 >
-                  <div className="flex h-72 items-center justify-center bg-linear-to-br from-amber-500/15 via-amber-400/5 to-white px-4 py-6">
+                  <div className="flex h-80 items-center justify-center bg-linear-to-br from-amber-500/15 via-amber-400/5 to-white px-4 py-6">
                     <div className="flex h-full w-full max-w-[280px] items-center justify-center rounded-[1.75rem] border border-amber-100/80 bg-white shadow-[0_20px_45px_-25px_rgba(245,158,11,0.45)] ring-1 ring-amber-100/60">
                       <div className="rounded-[1.25rem] bg-gradient-to-br from-amber-500/15 to-amber-400/5 p-7 ring-1 ring-amber-200/60">
                         <svg className="h-16 w-16 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -250,8 +246,10 @@ export default function Workflows() {
                   style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
                 >
                   <div className="flex h-full flex-col bg-linear-to-br from-amber-500/10 to-amber-400/5 p-6">
-                    <div className="mx-auto w-full max-w-[300px] overflow-hidden rounded-2xl border border-amber-100 bg-white shadow-sm">
-                      <div className="relative mx-auto" style={{ width: "300px", height: "520px" }}>
+                    <p className="mb-2 text-center text-sm font-medium text-amber-700">가족 연동 화면</p>
+                    <p className="mb-3 text-center text-xs text-amber-400 lg:hidden">탭하여 돌아가기</p>
+                    <div className="mx-auto w-full max-w-[300px] flex-1 overflow-hidden rounded-2xl border border-amber-100 bg-white shadow-sm">
+                      <div className="relative h-full w-full">
                         <iframe
                           src="/screens/06-guardian-link.html"
                           title="가족 연동 화면"
@@ -267,11 +265,7 @@ export default function Workflows() {
                         />
                       </div>
                     </div>
-                    <p className="mt-4 text-center text-sm font-medium text-amber-700">
-                      가족 연동 화면
-                    </p>
                   </div>
-                  <div className="absolute bottom-4 left-0 right-0 text-center text-xs text-amber-400 lg:hidden">탭하여 돌아가기</div>
                 </div>
               }
             />
